@@ -22,7 +22,7 @@ you'll have to run it under `sudo`.
 ```sh
 SOURCE_DIR="${PWD}"
 EXTENSION_UUID="ddterm@amezin.github.com"
-IMAGE="ghcr.io/amezin/gnome-shell-pod-fedora-35:master"
+IMAGE="ghcr.io/amezin/gnome-shell-pod/fedora-35:master"
 PACKAGE_MOUNTPATH="/home/gnomeshell/.local/share/gnome-shell/extensions/${EXTENSION_UUID}"
 
 POD=$(podman run --rm --cap-add=SYS_NICE,IPC_LOCK,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
