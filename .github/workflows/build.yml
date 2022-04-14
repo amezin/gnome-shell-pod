@@ -9,7 +9,34 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        fedora_version: ["32", "33", "34", "35", "36"]
+        include:
+          - distro_name: fedora-34
+            base_image: registry.fedoraproject.org/fedora:34
+            dockerfile: fedora.dockerfile
+
+          - distro_name: fedora-35
+            base_image: registry.fedoraproject.org/fedora:35
+            dockerfile: fedora.dockerfile
+
+          - distro_name: fedora-36
+            base_image: registry.fedoraproject.org/fedora:36
+            dockerfile: fedora.dockerfile
+
+          - distro_name: debian-11
+            base_image: debian:11
+            dockerfile: debian.dockerfile
+
+          - distro_name: ubuntu-20.04
+            base_image: ubuntu:20.04
+            dockerfile: debian.dockerfile
+
+          - distro_name: ubuntu-21.10
+            base_image: ubuntu:21.10
+            dockerfile: debian.dockerfile
+
+          - distro_name: ubuntu-22.04
+            base_image: ubuntu:22.04
+            dockerfile: debian.dockerfile
     steps:
       - uses: actions/checkout@v2
       - uses: docker/setup-buildx-action@v1
@@ -22,18 +49,19 @@ jobs:
       - id: docker_meta
         uses: docker/metadata-action@v3
         with:
-          images: ghcr.io/${{ github.repository }}-${{ matrix.fedora_version }}
+          images: ghcr.io/${{ github.repository }}-${{ matrix.distro_name }}
 
       - uses: docker/build-push-action@v2
         with:
           context: .
+          file: ${{ matrix.dockerfile }}
           build-args: |
-            fedora_version=${{ matrix.fedora_version }}
+            base_image=${{ matrix.base_image }}
           pull: true
           push: true
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
           cache-from: |
-            ghcr.io/${{ github.repository }}-${{ matrix.fedora_version }}:master
+            ghcr.io/${{ github.repository }}-${{ matrix.distro_name }}:master
             ${{ steps.docker_meta.outputs.tags }}
           cache-to: type=inline

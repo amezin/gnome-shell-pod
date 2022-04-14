@@ -1,5 +1,5 @@
-ARG fedora_version=latest
-FROM registry.fedoraproject.org/fedora:${fedora_version}
+ARG base_image=registry.fedoraproject.org/fedora:latest
+FROM ${base_image}
 
 RUN dnf update -y && \
     dnf install -y gnome-session-xsession gnome-extensions-app vte291 libxslt \
@@ -8,6 +8,7 @@ RUN dnf update -y && \
                    sudo make patch jq unzip git npm
 
 COPY etc /etc
+COPY fedora/etc /etc
 
 # Start Xvfb via systemd on display :99.
 # Add the gnomeshell user with no password.

@@ -22,10 +22,10 @@ you'll have to run it under `sudo`.
 ```sh
 SOURCE_DIR="${PWD}"
 EXTENSION_UUID="ddterm@amezin.github.com"
-IMAGE="ghcr.io/amezin/gnome-shell-pod-34:master"
+IMAGE="ghcr.io/amezin/gnome-shell-pod-fedora-35:master"
 PACKAGE_MOUNTPATH="/home/gnomeshell/.local/share/gnome-shell/extensions/${EXTENSION_UUID}"
 
-POD=$(podman run --rm --cap-add=SYS_NICE --cap-add=IPC_LOCK -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
+POD=$(podman run --rm --cap-add=SYS_NICE,IPC_LOCK,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
 ```
 
 ### 2. Wait for user systemd and D-Bus to start:
@@ -80,3 +80,33 @@ See https://github.com/amezin/gnome-shell-extension-ddterm:
 
 Session D-Bus daemon is listening on TCP port `1234`. To access it from host,
 add `--publish`/`--publish-all` option to `podman run` (see `podman` docs).
+
+## Building the image
+
+### Debian/Ubuntu image
+
+```sh
+podman build -f debian.dockerfile .
+```
+
+By default it builds on top of the latest stable Debian release (`debian:latest` on Docker Hub).
+
+To choose another base image/distro, pass `--build-arg base_image=...`:
+
+```sh
+podman build -f debian.dockerfile --build-arg base_image=ubuntu:20.04 .
+```
+
+### Fedora image
+
+```sh
+podman build -f fedora.dockerfile .
+```
+
+By default it builds on top of the latest stable Fedora release (`fedora:latest` on registry.fedoraproject.org).
+
+To choose another base image/distro, pass `--build-arg base_image=...`:
+
+```sh
+podman build -f debian.dockerfile --build-arg base_image=registry.fedoraproject.org/fedora:34 .
+```
