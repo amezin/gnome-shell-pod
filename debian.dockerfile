@@ -2,11 +2,8 @@ ARG base_image=debian:latest
 FROM ${base_image}
 
 RUN apt-get update -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        gnome-session gir1.2-vte-2.91 xsltproc \
-        libglib2.0-dev-bin libgtk-3-bin $(apt-cache show libgtk-4-bin >/dev/null && echo -n libgtk-4-bin) \
-        xvfb xdotool xautomation \
-        sudo make patch jq unzip git npm
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        gnome-session dbus-user-session gir1.2-vte-2.91 xvfb xdotool xautomation
 
 COPY etc /etc
 COPY debian/etc /etc
@@ -15,11 +12,9 @@ COPY debian/etc /etc
 # Add the gnomeshell user with no password.
 # Unmask required on Fedora 32
 RUN systemctl unmask systemd-logind.service console-getty.service getty.target && \
-    systemctl disable bluetooth.service && \
     systemctl enable xvfb@:99.service && \
     systemctl set-default multi-user.target && \
-    useradd -m -U -G users,adm gnomeshell && \
-    echo "gnomeshell     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    useradd -m -U -G users,adm gnomeshell
 
 # Add the scripts.
 COPY bin /usr/local/bin

@@ -2,10 +2,9 @@ ARG base_image=registry.fedoraproject.org/fedora:latest
 FROM ${base_image}
 
 RUN dnf update -y && \
-    dnf install -y gnome-session-xsession gnome-extensions-app vte291 libxslt \
-                   gtk3-devel gtk4-devel glib2-devel \
-                   xorg-x11-server-Xvfb xdotool xautomation \
-                   sudo make patch jq unzip git npm
+    dnf install -y gnome-session-xsession gnome-extensions-app vte291 \
+                   xorg-x11-server-Xvfb xdotool xautomation mesa-dri-drivers \
+                   --nodocs --setopt install_weak_deps=False && dnf clean all -y
 
 COPY etc /etc
 COPY fedora/etc /etc
@@ -18,8 +17,7 @@ RUN systemctl unmask systemd-logind.service console-getty.service getty.target &
     systemctl set-default multi-user.target && \
     systemctl --global disable dbus-broker && \
     systemctl --global enable dbus-daemon && \
-    adduser -m -U -G users,adm,wheel gnomeshell && \
-    echo "gnomeshell     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    adduser -m -U -G users,adm gnomeshell
 
 # Add the scripts.
 COPY bin /usr/local/bin
