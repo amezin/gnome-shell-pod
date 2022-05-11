@@ -14,7 +14,7 @@ COPY debian/etc /etc
 RUN systemctl unmask systemd-logind.service console-getty.service getty.target && \
     systemctl enable xvfb@:99.service && \
     systemctl set-default multi-user.target && \
-    systemctl mask upower && \
+    systemctl mask upower systemd-oomd && \
     systemctl --global mask xdg-document-portal && \
     useradd -m -U -G users,adm gnomeshell
 
