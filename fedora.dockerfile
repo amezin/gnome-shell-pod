@@ -17,7 +17,7 @@ RUN systemctl unmask systemd-logind.service console-getty.service getty.target &
     systemctl set-default multi-user.target && \
     systemctl --global disable dbus-broker && \
     systemctl --global enable dbus-daemon && \
-    systemctl mask upower systemd-oomd && \
+    systemctl mask systemd-oomd && \
     systemctl --global mask xdg-document-portal && \
     adduser -m -U -G users,adm gnomeshell
 
