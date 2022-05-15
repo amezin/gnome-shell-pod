@@ -1,15 +1,17 @@
-name: build
+name: ci
 
 on:
   push:
   workflow_dispatch:
   schedule:
     - cron: "14 1 * * *"
+  pull_request:
 
 jobs:
-  build:
+  build-test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         include:
           - image: ghcr.io/${{ github.repository }}/fedora-34
@@ -67,3 +69,32 @@ jobs:
             ${{ matrix.image }}:master
             ${{ steps.docker_meta.outputs.tags }}
           cache-to: type=inline
+        if: ${{ github.event_name != 'pull_request' }}
+
+      - uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          build-args: |
+            base_image=${{ matrix.base_image }}
+          pull: true
+          tags: ${{ steps.docker_meta.outputs.tags }}
+          labels: ${{ steps.docker_meta.outputs.labels }}
+          cache-from: |
+            ${{ matrix.image }}:master
+            ${{ steps.docker_meta.outputs.tags }}
+            ${{ matrix.image }}:${{ github.base_ref }}
+          outputs: |
+            type=oci,dest=image.tar
+
+      - name: Test gnome-xsession
+        run: sudo test/test.sh oci-archive:image.tar gnome-xsession
+
+      - name: Test gnome-wayland-nested
+        run: sudo test/test.sh oci-archive:image.tar gnome-wayland-nested
+
+      - name: Test gnome-wayland-nested-highdpi
+        run: sudo test/test.sh oci-archive:image.tar gnome-wayland-nested-highdpi
+
+      - name: Test gnome-wayland-nested-dual-monitor
+        run: sudo test/test.sh oci-archive:image.tar gnome-wayland-nested-dual-monitor
