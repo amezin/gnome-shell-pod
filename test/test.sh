@@ -13,7 +13,7 @@ function shutdown {
 
 set -ex
 
-POD=$(podman run --rm -Ptd --cap-add=SYS_NICE,IPC_LOCK,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE "$1")
+POD=$(podman run --rm -Ptd --cap-add=SYS_NICE,IPC_LOCK,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH "$1")
 
 trap shutdown EXIT
 
