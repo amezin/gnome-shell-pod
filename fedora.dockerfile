@@ -2,7 +2,7 @@ ARG base_image=registry.fedoraproject.org/fedora:latest
 FROM ${base_image}
 
 RUN dnf update -y && \
-    dnf install -y gnome-session-xsession gnome-extensions-app vte291 \
+    dnf install -y gnome-session-xsession gnome-extensions-app gjs vte291 \
                    xorg-x11-server-Xvfb xdotool xautomation mesa-dri-drivers \
                    --nodocs --setopt install_weak_deps=False && dnf clean all -y
 
