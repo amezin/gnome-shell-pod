@@ -88,13 +88,13 @@ jobs:
             type=oci,dest=image.tar
 
       - name: Test gnome-xsession
-        run: sudo test/test.sh oci-archive:image.tar gnome-xsession
+        run: sudo test/test.sh oci-archive:image.tar:${{ steps.docker_meta.outputs.version }} gnome-xsession
 
       - name: Test gnome-wayland-nested
-        run: sudo test/test.sh oci-archive:image.tar gnome-wayland-nested
+        run: sudo test/test.sh oci-archive:image.tar:${{ steps.docker_meta.outputs.version }} gnome-wayland-nested
 
       - name: Test gnome-wayland-nested-highdpi
-        run: sudo test/test.sh oci-archive:image.tar gnome-wayland-nested-highdpi
+        run: sudo test/test.sh oci-archive:image.tar:${{ steps.docker_meta.outputs.version }} gnome-wayland-nested-highdpi
 
       - name: Test gnome-wayland-nested-dual-monitor
-        run: sudo test/test.sh oci-archive:image.tar gnome-wayland-nested-dual-monitor
+        run: sudo test/test.sh oci-archive:image.tar:${{ steps.docker_meta.outputs.version }} gnome-wayland-nested-dual-monitor
