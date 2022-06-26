@@ -2,10 +2,16 @@ name: ci
 
 on:
   push:
+    paths-ignore:
+      - .github/registry-cleanup/**
+      - .github/workflows/ghcr-cleanup-test.yml
   workflow_dispatch:
   schedule:
     - cron: "14 1 * * *"
   pull_request:
+    paths-ignore:
+      - .github/registry-cleanup/**
+      - .github/workflows/ghcr-cleanup-test.yml
 
 concurrency: ${{ github.workflow }}/${{ github.ref }}
 
