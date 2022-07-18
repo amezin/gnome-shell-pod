@@ -22,10 +22,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - image: ghcr.io/${{ github.repository }}/fedora-34
-            base_image: registry.fedoraproject.org/fedora:34
-            dockerfile: fedora.dockerfile
-
           - image: ghcr.io/${{ github.repository }}/fedora-35
             base_image: registry.fedoraproject.org/fedora:35
             dockerfile: fedora.dockerfile
