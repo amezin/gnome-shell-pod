@@ -22,7 +22,7 @@ you'll have to run it under `sudo`.
 ```sh
 SOURCE_DIR="${PWD}"
 EXTENSION_UUID="ddterm@amezin.github.com"
-IMAGE="ghcr.io/amezin/gnome-shell-pod/fedora-35:master"
+IMAGE="ghcr.io/ddterm/gnome-shell-pod/fedora-36:master"
 PACKAGE_MOUNTPATH="/home/gnomeshell/.local/share/gnome-shell/extensions/${EXTENSION_UUID}"
 
 POD=$(podman run --rm --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
@@ -70,11 +70,11 @@ gnome-extensions enable "${EXTENSION_UUID}"
 
 ## Example
 
-See https://github.com/amezin/gnome-shell-extension-ddterm:
+See https://github.com/ddterm/gnome-shell-extension-ddterm:
 
-- https://github.com/amezin/gnome-shell-extension-ddterm/blob/master/run_test_podman.sh
+- https://github.com/ddterm/gnome-shell-extension-ddterm/tree/master/test
 
-- https://github.com/amezin/gnome-shell-extension-ddterm/blob/master/.github/workflows/test.yml
+- https://github.com/ddterm/gnome-shell-extension-ddterm/blob/master/.github/workflows/check.yml
 
 ## D-Bus
 
