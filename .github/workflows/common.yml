@@ -1,11 +1,21 @@
-name: ci
+concurrency: ${{ github.workflow }}/${{ github.ref }}
 
 on:
-  push:
-  pull_request:
   workflow_dispatch:
+    inputs:
+      push:
+        description: "Push built image"
+        default: true
+        required: false
+        type: boolean
 
-concurrency: ${{ github.workflow }}/${{ github.ref }}
+  workflow_call:
+    inputs:
+      push:
+        description: "Push built image"
+        default: true
+        required: false
+        type: boolean
 
 jobs:
   build-test:
@@ -52,7 +62,7 @@ jobs:
           build-args: |
             base_image=${{ matrix.image }}
           pull: true
-          push: ${{ github.event_name != 'pull_request' }}
+          push: ${{ inputs.push }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
           cache-from: |

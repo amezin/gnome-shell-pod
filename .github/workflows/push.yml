@@ -1,0 +1,8 @@
+name: push
+
+on:
+  push:
+
+jobs:
+  ci:
+    uses: ./.github/workflows/common.yml
