@@ -1,4 +1,8 @@
-ARG base_image=registry.fedoraproject.org/fedora:latest
+ARG base_image=fedora-36
+
+FROM registry.fedoraproject.org/fedora:35 AS fedora-35
+FROM registry.fedoraproject.org/fedora:36 AS fedora-36
+
 FROM ${base_image}
 
 RUN dnf update -y && \

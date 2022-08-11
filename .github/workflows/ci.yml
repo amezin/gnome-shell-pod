@@ -16,25 +16,22 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - image: ghcr.io/${{ github.repository }}/fedora-35
-            base_image: registry.fedoraproject.org/fedora:35
+          - image: fedora-35
             dockerfile: fedora.dockerfile
 
-          - image: ghcr.io/${{ github.repository }}/fedora-36
-            base_image: registry.fedoraproject.org/fedora:36
+          - image: fedora-36
             dockerfile: fedora.dockerfile
 
-          - image: ghcr.io/${{ github.repository }}/debian-11
-            base_image: debian:11
+          - image: debian-11
             dockerfile: debian.dockerfile
 
-          - image: ghcr.io/${{ github.repository }}/ubuntu-20.04
-            base_image: ubuntu:20.04
+          - image: ubuntu-20.04
             dockerfile: debian.dockerfile
 
-          - image: ghcr.io/${{ github.repository }}/ubuntu-22.04
-            base_image: ubuntu:22.04
+          - image: ubuntu-22.04
             dockerfile: debian.dockerfile
+    env:
+      IMAGE: ghcr.io/${{ github.repository }}/${{ matrix.image }}
     steps:
       - uses: actions/checkout@v3
 
@@ -47,7 +44,7 @@ jobs:
       - id: docker_meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ matrix.image }}
+          images: ${{ env.IMAGE }}
 
       - id: docker_build
         uses: docker/build-push-action@v3
@@ -55,13 +52,13 @@ jobs:
           context: .
           file: ${{ matrix.dockerfile }}
           build-args: |
-            base_image=${{ matrix.base_image }}
+            base_image=${{ matrix.image }}
           pull: true
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
           cache-from: |
-            ${{ matrix.image }}:master
+            ${{ env.IMAGE }}:master
             ${{ steps.docker_meta.outputs.tags }}
           cache-to: type=inline
 

@@ -1,4 +1,9 @@
-ARG base_image=debian:latest
+ARG base_image=ubuntu-22.04
+
+FROM debian:11 AS debian-11
+FROM ubuntu:20.04 AS ubuntu-20.04
+FROM ubuntu:22.04 AS ubuntu-22.04
+
 FROM ${base_image}
 
 RUN apt-get update -y && \
