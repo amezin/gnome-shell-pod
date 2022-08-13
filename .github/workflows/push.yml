@@ -3,6 +3,9 @@ name: push
 on:
   push:
 
+permissions:
+  packages: write
+
 jobs:
   ci:
     uses: ./.github/workflows/common.yml
