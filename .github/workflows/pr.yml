@@ -7,4 +7,4 @@ jobs:
   ci:
     uses: ./.github/workflows/common.yml
     with:
-      push: ${{ github.event.repository.node_id == github.event.pull_request.head.repo.node_id }}
+      push: false
