@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "docker": {
+    "pinDigests": true,
+    "major": {
+      "enabled": false
+    }
+  },
+  "dockerfile": {
+    "fileMatch": [
+      "(^|/|\\.)dockerfile$"
+    ]
+  }
+}
