@@ -77,9 +77,3 @@ jobs:
 
       - name: Test gnome-wayland-nested
         run: sudo test/test.sh $(cat .podman-image-id) gnome-wayland-nested
-
-      - name: Test gnome-wayland-nested-highdpi
-        run: sudo test/test.sh $(cat .podman-image-id) gnome-wayland-nested-highdpi
-
-      - name: Test gnome-wayland-nested-dual-monitor
-        run: sudo test/test.sh $(cat .podman-image-id) gnome-wayland-nested-dual-monitor
