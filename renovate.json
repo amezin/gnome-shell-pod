@@ -12,6 +12,7 @@
     ],
     "major": {
       "enabled": false
-    }
+    },
+    "groupName": "Base images"
   }
 }
