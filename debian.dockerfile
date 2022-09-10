@@ -10,8 +10,7 @@ RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         gnome-session gjs dbus-user-session gir1.2-vte-2.91 xvfb xdotool xautomation
 
-COPY etc /etc
-COPY debian/etc /etc
+COPY common debian /
 
 # Start Xvfb via systemd on display :99.
 # Add the gnomeshell user with no password.
@@ -22,9 +21,6 @@ RUN systemctl unmask systemd-logind.service console-getty.service getty.target &
     systemctl mask systemd-oomd && \
     systemctl --global mask xdg-document-portal gnome-keyring && \
     useradd -m -U -G users,adm gnomeshell
-
-# Add the scripts.
-COPY bin /usr/local/bin
 
 # dbus port
 EXPOSE 1234

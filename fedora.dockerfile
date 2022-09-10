@@ -10,8 +10,7 @@ RUN dnf update -y && \
                    xorg-x11-server-Xvfb xdotool xautomation mesa-dri-drivers \
                    --nodocs --setopt install_weak_deps=False && dnf clean all -y
 
-COPY etc /etc
-COPY fedora/etc /etc
+COPY common fedora /
 
 # Start Xvfb via systemd on display :99.
 # Add the gnomeshell user with no password.
@@ -24,9 +23,6 @@ RUN systemctl unmask systemd-logind.service console-getty.service getty.target &
     systemctl mask systemd-oomd && \
     systemctl --global mask xdg-document-portal gnome-keyring && \
     adduser -m -U -G users,adm gnomeshell
-
-# Add the scripts.
-COPY bin /usr/local/bin
 
 # dbus port
 EXPOSE 1234
