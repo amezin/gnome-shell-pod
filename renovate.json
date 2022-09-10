@@ -4,14 +4,14 @@
     "config:base"
   ],
   "docker": {
-    "pinDigests": true,
-    "major": {
-      "enabled": false
-    }
+    "pinDigests": true
   },
   "dockerfile": {
     "fileMatch": [
       "(^|/|\\.)dockerfile$"
-    ]
+    ],
+    "major": {
+      "enabled": false
+    }
   }
 }
