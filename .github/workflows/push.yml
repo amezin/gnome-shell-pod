@@ -1,7 +1,12 @@
 name: push
 
 on:
+  workflow_dispatch:
   push:
+    branches-ignore:
+      - master
+    tags:
+      - "*"
 
 permissions:
   packages: write

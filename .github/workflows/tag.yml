@@ -1,0 +1,20 @@
+on:
+  workflow_call:
+  workflow_dispatch:
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - id: tag
+        uses: ddterm/autotag@2022.09.07.7
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.actions.createWorkflowDispatch({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'push.yml',
+              ref: '${{ steps.tag.outputs.ref }}',
+            })
