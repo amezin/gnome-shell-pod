@@ -3,6 +3,7 @@ ARG base_image=ubuntu-22.04
 FROM debian:11@sha256:e538a2f0566efc44db21503277c7312a142f4d0dedc5d2886932b92626104bff AS debian-11
 FROM ubuntu:20.04@sha256:e722c7335fdd0ce77044ab5942cb1fbd2b5f60d1f5416acfcdb0814b2baf7898 AS ubuntu-20.04
 FROM ubuntu:22.04@sha256:a8fe6fd30333dc60fc5306982a7c51385c2091af1e0ee887166b40a905691fd0 AS ubuntu-22.04
+FROM ubuntu:22.10@sha256:898852f07de8ff57e7810a5c28553e71f10db60ae79c2b7a06acc45bbb03741a AS ubuntu-22.10
 
 FROM ${base_image}
 

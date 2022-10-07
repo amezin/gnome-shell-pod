@@ -41,6 +41,9 @@ jobs:
 
           - image: ubuntu-22.04
             dockerfile: debian.dockerfile
+
+          - image: ubuntu-22.10
+            dockerfile: debian.dockerfile
     env:
       IMAGE: ghcr.io/${{ github.repository }}/${{ matrix.image }}
     steps:
