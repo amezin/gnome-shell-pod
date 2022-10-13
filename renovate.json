@@ -13,6 +13,7 @@
     "major": {
       "enabled": false
     },
-    "groupName": "Base images"
+    "groupName": "Base images",
+    "automerge": true
   }
 }
