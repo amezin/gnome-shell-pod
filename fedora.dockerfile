@@ -2,7 +2,7 @@ ARG base_image=fedora-36
 
 FROM registry.fedoraproject.org/fedora:35@sha256:76fad5d5ade3a3f27530b82be513937f9c39aa82e6e3eeb1ad0d171753ade1ac AS fedora-35
 FROM registry.fedoraproject.org/fedora:36@sha256:7d36dae8e7a197a561818356374034d8efab31f84083d852632cb8efad1f46e6 AS fedora-36
-FROM registry.fedoraproject.org/fedora:37@sha256:171d890e0bd16d90b4688c4ca7b30d9d66fc1e8bf54d8ed2340dc923ef234051 AS fedora-37
+FROM registry.fedoraproject.org/fedora:37@sha256:b794b80e0107838883ca68224de10b7317027ed414d62a1163b189cc02f264bc AS fedora-37
 
 FROM ${base_image}
 
