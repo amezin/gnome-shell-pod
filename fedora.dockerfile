@@ -9,6 +9,7 @@ FROM ${base_image}
 RUN dnf update -y && \
     dnf install -y gnome-session-xsession gnome-extensions-app gjs vte291 \
                    xorg-x11-server-Xvfb mesa-dri-drivers \
+                   PackageKit PackageKit-glib \
                    --nodocs --setopt install_weak_deps=False && dnf clean all -y
 
 COPY common fedora /
