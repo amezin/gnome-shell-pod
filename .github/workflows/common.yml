@@ -24,9 +24,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - image: fedora-35
-            dockerfile: fedora.dockerfile
-
           - image: fedora-36
             dockerfile: fedora.dockerfile
 
