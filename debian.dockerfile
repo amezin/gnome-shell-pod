@@ -9,7 +9,7 @@ FROM ${base_image}
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        gnome-session gjs dbus-user-session gir1.2-vte-2.91 xvfb xdotool xautomation
+        gnome-session gjs dbus-user-session gir1.2-vte-2.91 xvfb
 
 COPY common debian /
 
