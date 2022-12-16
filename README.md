@@ -81,6 +81,27 @@ See https://github.com/ddterm/gnome-shell-extension-ddterm:
 Session D-Bus daemon is listening on TCP port `1234`. To access it from host,
 add `--publish`/`--publish-all` option to `podman run` (see `podman` docs).
 
+## X11/Xvfb display
+
+Xvfb starts on display `:99`. If you want to run some X11 utility, you should
+add `-e DISPLAY=:99` to `podman exec`.
+
+Also, Xvfb display is available over TCP. Its port isn't published by default
+(`podman run ... -P ...`), because X11 TCP port numbers should start from
+`6000`. You have to manually choose the host-side port number. If you run only
+one container, you can use `6099` (same port number on the host and guest side)
+for simplicity:
+
+```sh
+podman run ... --publish=6099:6099 ...
+```
+
+and then run X11 utilities on the host like this:
+
+```sh
+DISPLAY=127.0.0.1:99 xdpyinfo
+```
+
 ## Building the image
 
 ### Debian/Ubuntu image
