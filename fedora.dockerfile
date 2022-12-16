@@ -2,6 +2,7 @@ ARG base_image=fedora-36
 
 FROM registry.fedoraproject.org/fedora:36@sha256:664286544857bcd6365b51d8ee096d91289a8db0ee6e9e41072e021719a511fa AS fedora-36
 FROM registry.fedoraproject.org/fedora:37@sha256:ce08a91085403ecbc637eb2a96bd3554d75537871a12a14030b89243501050f2 AS fedora-37
+FROM quay.io/centos/centos:stream9@sha256:e1c314b97166966e9694a936bb4a267a2249d393fad0eef7ecf1e96f14597eb4 AS centos-9
 
 FROM ${base_image}
 
@@ -20,8 +21,8 @@ RUN systemctl unmask systemd-logind.service console-getty.service getty.target &
     systemctl set-default multi-user.target && \
     systemctl --global disable dbus-broker && \
     systemctl --global enable dbus-daemon && \
-    systemctl mask systemd-oomd && \
-    systemctl --global mask xdg-document-portal gnome-keyring && \
+    systemctl mask systemd-oomd low-memory-monitor && \
+    systemctl --global mask xdg-document-portal gnome-keyring org.gnome.SettingsDaemon.Subscription && \
     adduser -m -U -G users,adm gnomeshell
 
 # dbus port
