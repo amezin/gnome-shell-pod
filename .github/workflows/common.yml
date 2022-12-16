@@ -75,6 +75,8 @@ jobs:
 
       - run: sudo podman pull docker-daemon:${{ steps.docker_build.outputs.imageid }} | tee .podman-image-id
 
+      - run: DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends x11-utils
+
       - name: Test gnome-xsession
         run: sudo test/test.sh $(cat .podman-image-id) gnome-xsession
 

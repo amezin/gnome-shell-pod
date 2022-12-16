@@ -13,7 +13,7 @@ function shutdown {
 
 set -ex
 
-POD=$(podman run --rm -Ptd --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH "$1")
+POD=$(podman run --rm -Ptd --publish=6099:6099 --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH "$1")
 
 trap shutdown EXIT
 
@@ -34,3 +34,5 @@ sleep 15
 
 podman exec "${POD}" systemctl is-system-running --wait
 podman exec --user gnomeshell "${POD}" set-env.sh systemctl --user is-system-running --wait
+
+DISPLAY=127.0.0.1:99 xdpyinfo
