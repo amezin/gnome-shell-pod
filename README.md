@@ -68,38 +68,69 @@ use this script to wait for it.
 gnome-extensions enable "${EXTENSION_UUID}"
 ```
 
-## Example
-
-See https://github.com/ddterm/gnome-shell-extension-ddterm:
-
-- https://github.com/ddterm/gnome-shell-extension-ddterm/tree/master/test
-
-- https://github.com/ddterm/gnome-shell-extension-ddterm/blob/master/.github/workflows/check.yml
-
 ## D-Bus
 
 Session D-Bus daemon is listening on TCP port `1234`. To access it from host,
 add `--publish`/`--publish-all` option to `podman run` (see `podman` docs).
+
+To get the host-side port number, use `podman port` command:
+
+```sh
+podman port "${POD}" 1234
+```
+
+It will output something like:
+
+```
+127.0.0.1:42325
+```
+
+or
+
+```
+0.0.0.0:42325
+```
+
+It will translate into D-Bus address `tcp:host=localhost,port=42325`.
+
+For example:
+
+```sh
+dbus-send --bus=tcp:host=localhost,port=42325 --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.Peer.Ping
+```
 
 ## X11/Xvfb display
 
 Xvfb starts on display `:99`. If you want to run some X11 utility, you should
 add `-e DISPLAY=:99` to `podman exec`.
 
-Also, Xvfb display is available over TCP. Its port isn't published by default
-(`podman run ... -P ...`), because X11 TCP port numbers should start from
-`6000`. You have to manually choose the host-side port number. If you run only
-one container, you can use `6099` (same port number on the host and guest side)
-for simplicity:
+Also, Xvfb display is available over TCP, on port `6099`. It will be published
+by `--publish-all` too.
+
+To get the host-side port number, use `podman port` command:
 
 ```sh
-podman run ... --publish=6099:6099 ...
+podman port "${POD}" 1234
 ```
 
-and then run X11 utilities on the host like this:
+It will output something like:
+
+```
+127.0.0.1:42325
+```
+
+or
+
+```
+0.0.0.0:42325
+```
+
+You'll need to subtract `6000` from the port number to get X11 display number.
+
+Then run X11 utilities on the host like this:
 
 ```sh
-DISPLAY=127.0.0.1:99 xdpyinfo
+DISPLAY=127.0.0.1:36325 xte "mousedown 1"
 ```
 
 ## Building the image

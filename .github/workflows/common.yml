@@ -83,7 +83,5 @@ jobs:
       - name: Test gnome-xsession
         run: sudo test/test.sh $(cat .podman-image-id) gnome-xsession
 
-      - run: sudo killall conmon
-
       - name: Test gnome-wayland-nested
         run: sudo test/test.sh $(cat .podman-image-id) gnome-wayland-nested

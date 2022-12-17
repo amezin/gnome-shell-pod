@@ -13,14 +13,14 @@ function shutdown {
 
 set -ex
 
-POD=$(podman run --rm -Ptd --publish=6099:6099 --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH "$1")
+POD=$(podman run --rm -Ptd --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH "$1")
 
 trap shutdown EXIT
 
 podman attach --no-stdin --sig-proxy=false "${POD}" &
 podman exec --user gnomeshell "${POD}" set-env.sh wait-user-bus.sh
 
-DBUS_PORT=$(podman inspect --format '{{(index (index .NetworkSettings.Ports "1234/tcp") 0).HostPort}}' "${POD}")
+DBUS_PORT=$(podman port "${POD}" 1234 | cut -d: -f2)
 dbus-send --bus=tcp:host=localhost,port=$DBUS_PORT --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.Peer.Ping
 
 podman exec --user gnomeshell "${POD}" set-env.sh systemctl --user start "$2@:99"
@@ -35,4 +35,5 @@ sleep 15
 podman exec "${POD}" systemctl is-system-running --wait
 podman exec --user gnomeshell "${POD}" set-env.sh systemctl --user is-system-running --wait
 
-DISPLAY=127.0.0.1:99 xdpyinfo
+X11_PORT=$(podman port "${POD}" 6099 | cut -d: -f2)
+DISPLAY=127.0.0.1:$(( $X11_PORT - 6000 )) xdpyinfo
