@@ -44,6 +44,9 @@ jobs:
 
           - image: ubuntu-22.10
             dockerfile: debian.dockerfile
+
+          - image: archlinux
+            dockerfile: archlinux.dockerfile
     env:
       IMAGE: ghcr.io/${{ github.repository }}/${{ matrix.image }}
     steps:
