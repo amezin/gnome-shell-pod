@@ -1,6 +1,7 @@
 FROM archlinux:latest@sha256:e98008b351bf47ada7efe158b9220d403cd555d86353b5d457b53e72bd7ef727
 
 RUN pacman -Sy --noconfirm gnome-shell vte3 xorg-server-xvfb xorg-xinit mesa && \
+    pacman -Rdd --noconfirm rtkit && \
     pacman -Scc
 
 COPY common archlinux /
