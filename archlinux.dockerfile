@@ -1,4 +1,4 @@
-FROM archlinux:latest@sha256:37dbbfa36f6e5834d00f91d63fc202d20daf9b91d3f5a09a24121f7564331a76
+FROM archlinux:latest@sha256:9167ec489f207c80e953375d3c5554c4846ef6cfe3869a536e710e2be6b405de
 
 RUN pacman -Sy --noconfirm gnome-shell vte3 xorg-server-xvfb xorg-xinit mesa packagekit && \
     pacman -Rdd --noconfirm rtkit && \
