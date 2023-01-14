@@ -7,6 +7,9 @@ on:
       - master
     tags:
       - "*"
+    paths-ignore:
+      - .github/registry-cleanup/**
+      - .github/workflows/ghcr-*.yml
 
 permissions:
   packages: write
