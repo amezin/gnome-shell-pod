@@ -23,4 +23,4 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - run: npm install
-      - run: ./cleanup.js ${{ inputs.dry-run && '-n' || '' }} -t "${{ secrets.packages-api-token }}"
+      - run: ./cleanup.js ${{ inputs.dry-run && '-n' || '' }} -t "${{ secrets.packages-api-token }}" -j4
