@@ -6,6 +6,8 @@ on:
       - .github/registry-cleanup/**
       - .github/workflows/ghcr-*.yml
       - renovate.json
+      - README.md
+      - LICENSE
 
 jobs:
   ci:
