@@ -1,14 +1,14 @@
 {
   "name": "registry-cleanup",
   "dependencies": {
-    "@octokit/core": "^3.6.0",
-    "@octokit/plugin-paginate-rest": "^2.17.0",
+    "@octokit/core": "^4.1.0",
+    "@octokit/plugin-paginate-rest": "^5.0.1",
     "@octokit/plugin-request-log": "^1.0.4",
-    "@octokit/plugin-retry": "^3.0.9",
-    "@octokit/plugin-throttling": "^3.6.2",
+    "@octokit/plugin-retry": "^4.0.3",
+    "@octokit/plugin-throttling": "^4.3.2",
     "cheerio": "^1.0.0-rc.12",
     "console-log-level": "^1.4.1",
     "node-fetch": "^2.6.8",
-    "yargs": "^17.5.1"
+    "yargs": "^17.6.2"
   }
 }
