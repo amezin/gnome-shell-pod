@@ -215,6 +215,11 @@ async function main() {
             octokit.log.debug(`Checking commit ${sha}`);
 
             const refsHtml = await (await fetch(`${version.commitRefsBaseUrl}/${sha}`, { agent })).text();
+            if (!refsHtml.trim()) {
+                octokit.log.warn(`Empty branch_commits response for commit ${sha}`);
+                return true;
+            }
+
             const refsDom = cheerio.load(refsHtml);
             const links = refsDom('a').map((_, a) => refsDom(a).attr('href')).get();
 
