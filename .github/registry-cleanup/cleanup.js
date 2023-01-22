@@ -224,30 +224,18 @@ async function main() {
             const refsResponse = await fetch(`${version.commitRefsBaseUrl}/${sha}`, githubWebOptions);
             const refsHtml = await refsResponse.text();
 
-            const emptyResponse = !refsHtml.trim();
-            const badStatus = refsResponse.status != 200;
-
-            if (emptyResponse) {
-                octokit.log.warn(`Empty branch_commits response for commit ${sha}`);
-            }
-
-            if (badStatus) {
-                octokit.log.warn(`Unexpected branch_commits response status: ${refsResponse.status}`);
-            }
-
-            if (emptyResponse || badStatus) {
-                return true;
-            }
-
             const refsDom = cheerio.load(refsHtml);
             const links = refsDom('a').map((_, a) => refsDom(a).attr('href')).get();
 
             if (links.length > 0) {
                 octokit.log.debug(`Refs found for commit ${sha}: ${JSON.stringify(links)}`);
                 return true;
-            } else {
+            } else if (refsDom('span#js-spoofed-commit-warning-trigger').length === 1) {
                 octokit.log.debug(`No refs found for commit ${sha}`);
                 return false;
+            } else {
+                octokit.log.warn(`Can't decode branch_commits response: ${refsHtml}`);
+                return true;
             }
         } catch (ex) {
             octokit.log.error(`Error checking commit ${sha}: ${ex}`);
