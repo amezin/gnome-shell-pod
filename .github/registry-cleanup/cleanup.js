@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
 const http = require('http');
 const https = require('https');
 const stream = require('node:stream');
 const url = require('node:url');
 
-const cheerio = require('cheerio');
 const fetch = require('node-fetch');
 const yargs = require('yargs/yargs');
+const template = require('url-template');
+const merge_stream = require('merge-stream');
 
 const httpAgent = new http.Agent({ keepAlive: true });
 const httpsAgent = new https.Agent({ keepAlive: true });
@@ -139,6 +139,18 @@ async function main() {
         }
     )).data;
 
+    const branches = stream.Readable.from(
+        octokit.paginate.iterator(template.parse(repo.branches_url).expand({}))
+    ).flatMap(response => response.data).map(branch => branch.name);
+
+    const tags = stream.Readable.from(
+        octokit.paginate.iterator(repo.tags_url)
+    ).flatMap(response => response.data).map(tag => tag.name);
+
+    const refs = await merge_stream(branches, tags).toArray();
+
+    octokit.log.info(`Branches and tags found: ${JSON.stringify(refs)}`);
+
     const packages = stream.Readable.from(
         octokit.paginate.iterator(
             'GET {+user_url}/packages',
@@ -175,13 +187,11 @@ async function main() {
         package => {
             const image = `${registryUrl.host}/${package.owner.login}/${package.name}`;
             const registryBaseUrl = new url.URL(`/v2/${package.owner.login}/${package.name}/`, registryUrl).toString();
-            const commitRefsBaseUrl = new url.URL('./branch_commits', `${package.repository.html_url}/`).toString();
 
             return package.versions.map(version => {
                 version.image = `${image}@${version.name}`;
                 version.manifestUrl = new url.URL(`./manifests/${version.name}`, registryBaseUrl).toString();
                 version.blobBaseUrl = new url.URL('./blobs/', registryBaseUrl).toString();
-                version.commitRefsBaseUrl = commitRefsBaseUrl;
 
                 const tags = version.metadata.container.tags;
                 version.displayImage = tags.length > 0 ? `${image}:${tags[0]}` : version.image;
@@ -199,60 +209,27 @@ async function main() {
         agent
     };
 
-    const getRevision = async version => {
+    const getRefName = async version => {
         octokit.log.debug(`Getting revision for image ${version.image}`);
         const manifest = await (await fetch(version.manifestUrl, dockerRegistryOptions)).json();
         version.configUrl = new url.URL(`./${manifest.config.digest}`, version.blobBaseUrl).toString();
         const config = await (await fetch(version.configUrl, dockerRegistryOptions)).json();
         const labels = config.config.Labels;
-        const revision = labels ? labels['org.opencontainers.image.revision'] : null;
-        octokit.log.debug(`Revision of ${version.image}: ${revision}`);
-        return revision;
-    };
-
-    const githubWebOptions = {
-        headers: new fetch.Headers({
-            'Authorization': `token ${args.token}`
-        }),
-        agent
-    }
-
-    const commitExists = async (version, sha) => {
-        try {
-            octokit.log.debug(`Checking commit ${sha}`);
-
-            const refsResponse = await fetch(`${version.commitRefsBaseUrl}/${sha}`, githubWebOptions);
-            const refsHtml = await refsResponse.text();
-
-            const refsDom = cheerio.load(refsHtml);
-            const links = refsDom('a').map((_, a) => refsDom(a).attr('href')).get();
-
-            if (links.length > 0) {
-                octokit.log.debug(`Refs found for commit ${sha}: ${JSON.stringify(links)}`);
-                return true;
-            } else if (refsDom('span#js-spoofed-commit-warning-trigger').length === 1) {
-                octokit.log.debug(`No refs found for commit ${sha}`);
-                return false;
-            } else {
-                octokit.log.warn(`Can't decode branch_commits response: ${refsHtml}`);
-                return true;
-            }
-        } catch (ex) {
-            octokit.log.error(`Error checking commit ${sha}: ${ex}`);
-            return true;
-        }
+        const refName = labels ? labels['org.opencontainers.image.version'] : null;
+        octokit.log.debug(`Version of ${version.image}: ${refName}`);
+        return refName;
     };
 
     const toDelete = await versions.filter(
         async version => {
             octokit.log.debug(`Processing ${version.displayImage}`);
 
-            const revision = await getRevision(version);
-            if (!revision) {
+            const ref = await getRefName(version);
+            if (!ref) {
                 return false;
             }
 
-            return !await commitExists(version, revision);
+            return !refs.includes(ref);
         },
         concurrencyOptions,
     );
