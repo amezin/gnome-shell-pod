@@ -210,11 +210,18 @@ async function main() {
         return revision;
     };
 
+    const githubWebOptions = {
+        headers: new fetch.Headers({
+            'Authorization': `token ${args.token}`
+        }),
+        agent
+    }
+
     const commitExists = async (version, sha) => {
         try {
             octokit.log.debug(`Checking commit ${sha}`);
 
-            const refsResponse = await fetch(`${version.commitRefsBaseUrl}/${sha}`, { agent });
+            const refsResponse = await fetch(`${version.commitRefsBaseUrl}/${sha}`, githubWebOptions);
             const refsHtml = await refsResponse.text();
 
             const emptyResponse = !refsHtml.trim();
