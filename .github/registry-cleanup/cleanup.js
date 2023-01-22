@@ -214,9 +214,21 @@ async function main() {
         try {
             octokit.log.debug(`Checking commit ${sha}`);
 
-            const refsHtml = await (await fetch(`${version.commitRefsBaseUrl}/${sha}`, { agent })).text();
-            if (!refsHtml.trim()) {
+            const refsResponse = await fetch(`${version.commitRefsBaseUrl}/${sha}`, { agent });
+            const refsHtml = await refsResponse.text();
+
+            const emptyResponse = !refsHtml.trim();
+            const badStatus = refsResponse.status != 200;
+
+            if (emptyResponse) {
                 octokit.log.warn(`Empty branch_commits response for commit ${sha}`);
+            }
+
+            if (badStatus) {
+                octokit.log.warn(`Unexpected branch_commits response status: ${refsResponse.status}`);
+            }
+
+            if (emptyResponse || badStatus) {
                 return true;
             }
 
