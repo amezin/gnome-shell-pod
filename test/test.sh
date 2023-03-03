@@ -8,24 +8,18 @@ fi
 function shutdown {
     podman exec "$CID" systemctl list-units --failed || true
     podman exec --user gnomeshell "$CID" set-env.sh systemctl --user list-units --failed || true
-    podman stop --cidfile="$CIDFILE"
-
-    rm -rf "$WORKDIR"
+    podman rm -f "$CID"
 }
 
 set -ex
 
-WORKDIR="$(mktemp -d)"
-CIDFILE="$WORKDIR/cid"
 CAPS="SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH"
-
-podman run --rm -Ptd --cap-add="$CAPS" --cidfile="$CIDFILE" "$1"
-
-CID="$(<"$CIDFILE")"
+CID="$(podman create -Pt --cap-add="$CAPS" "$1")"
 
 trap shutdown EXIT
 
-podman attach --no-stdin --sig-proxy=false "$CID" &
+podman start --attach --sig-proxy=false "$CID" &
+podman wait --condition=running "$CID"
 podman exec --user gnomeshell "$CID" set-env.sh wait-user-bus.sh
 
 DBUS_ENDPOINT="$(podman port "$CID" 1234)"
