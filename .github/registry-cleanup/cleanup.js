@@ -24,6 +24,11 @@ const Octokit = require('@octokit/core').Octokit.plugin(
     require('@octokit/plugin-request-log').requestLog,
 )
 
+// from docker/metadata-action
+function sanitizeTag(tag) {
+    return tag.replace(/[^a-zA-Z0-9._-]+/g, '-');
+}
+
 async function main() {
     const args = yargs(require('yargs/helpers').hideBin(process.argv))
         .option('token', {
@@ -147,7 +152,7 @@ async function main() {
         octokit.paginate.iterator(repo.tags_url)
     ).flatMap(response => response.data).map(tag => tag.name);
 
-    const refs = await merge_stream(branches, tags).toArray();
+    const refs = await merge_stream(branches, tags).map(sanitizeTag).toArray();
 
     octokit.log.info(`Branches and tags found: ${JSON.stringify(refs)}`);
 
