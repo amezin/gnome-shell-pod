@@ -18,8 +18,10 @@ RUN systemctl unmask systemd-logind.service console-getty.service getty.target &
 
 # dbus port
 EXPOSE 1234
+LABEL user-dbus-port=1234
 
 # X11 port
 EXPOSE 6099
+LABEL x11-port=6099 x11-display-number=99
 
 CMD [ "/usr/sbin/init", "systemd.unified_cgroup_hierarchy=0" ]

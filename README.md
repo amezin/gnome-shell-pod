@@ -99,6 +99,13 @@ For example:
 dbus-send --bus=tcp:host=localhost,port=42325 --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.Peer.Ping
 ```
 
+Container-side port number (`1234`) is also stored in `user-dbus-port` label.
+You could get it using the following command:
+
+```sh
+podman container inspect --format='{{index .Config.Labels "user-dbus-port"}}'
+```
+
 ## X11/Xvfb display
 
 Xvfb starts on display `:99`. If you want to run some X11 utility, you should
@@ -131,6 +138,13 @@ Then run X11 utilities on the host like this:
 
 ```sh
 DISPLAY=127.0.0.1:36325 xte "mousedown 1"
+```
+
+Container-side port number (`6099`) is also stored in `x11-port` label. You
+could get it using the following command:
+
+```sh
+podman container inspect --format='{{index .Config.Labels "x11-port"}}'
 ```
 
 ## Building the image

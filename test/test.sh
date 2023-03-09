@@ -18,11 +18,14 @@ CID="$(podman create -Pt --cap-add="$CAPS" "$1")"
 
 trap shutdown EXIT
 
+DBUS_CONTAINER_PORT="$(podman container inspect --format='{{index .Config.Labels "user-dbus-port"}}' "$CID")"
+X11_CONTAINER_PORT="$(podman container inspect --format='{{index .Config.Labels "x11-port"}}' "$CID")"
+
 podman start --attach --sig-proxy=false "$CID" &
 podman wait --condition=running "$CID"
 podman exec --user gnomeshell "$CID" set-env.sh wait-user-bus.sh
 
-DBUS_ENDPOINT="$(podman port "$CID" 1234)"
+DBUS_ENDPOINT="$(podman port "$CID" "$DBUS_CONTAINER_PORT")"
 DBUS_ADDRESS="tcp:host=${DBUS_ENDPOINT%%:*},port=${DBUS_ENDPOINT#*:}"
 dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.Peer.Ping
 
@@ -38,5 +41,5 @@ sleep 15
 podman exec "$CID" systemctl is-system-running --wait
 podman exec --user gnomeshell "$CID" set-env.sh systemctl --user is-system-running --wait
 
-X11_ENDPOINT="$(podman port "$CID" 6099)"
+X11_ENDPOINT="$(podman port "$CID" "$X11_CONTAINER_PORT")"
 DISPLAY="${X11_ENDPOINT%%:*}:$(( ${X11_ENDPOINT#*:} - 6000 ))" xdpyinfo
