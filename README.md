@@ -110,7 +110,7 @@ by `--publish-all` too.
 To get the host-side port number, use `podman port` command:
 
 ```sh
-podman port "${POD}" 1234
+podman port "${POD}" 6099
 ```
 
 It will output something like:
