@@ -1,10 +1,9 @@
 [Unit]
-Description=Run gnome session for display %I
+Description=Run GNOME X11 session for display %I
 
 [Service]
 Environment="DISPLAY=%I"
 Environment="XDG_SESSION_TYPE=x11"
-ExecStart=/etc/X11/xinit/Xsession gnome-session
 
 [Install]
 WantedBy=default.target
