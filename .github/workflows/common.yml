@@ -47,6 +47,7 @@ jobs:
 
           - image: archlinux
             dockerfile: archlinux.dockerfile
+    timeout-minutes: 10
     env:
       IMAGE: ghcr.io/${{ github.repository }}/${{ matrix.image }}
     steps:
