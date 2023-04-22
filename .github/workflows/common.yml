@@ -48,6 +48,9 @@ jobs:
           - image: ubuntu-22.10
             dockerfile: debian.dockerfile
 
+          - image: ubuntu-23.04
+            dockerfile: debian.dockerfile
+
           - image: archlinux
             dockerfile: archlinux.dockerfile
     timeout-minutes: 10

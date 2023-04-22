@@ -4,6 +4,7 @@ FROM debian:11@sha256:0a78ed641b76252739e28ebbbe8cdbd80dc367fba4502565ca839e5803
 FROM ubuntu:20.04@sha256:b795f8e0caaaacad9859a9a38fe1c78154f8301fdaf0872eaf1520d66d9c0b98 AS ubuntu-20.04
 FROM ubuntu:22.04@sha256:7a57c69fe1e9d5b97c5fe649849e79f2cfc3bf11d10bbd5218b4eb61716aebe6 AS ubuntu-22.04
 FROM ubuntu:22.10@sha256:a9a425d086dbb34c1b5b99765596e2a3cc79b33826866c51cd4508d8eb327d2b AS ubuntu-22.10
+FROM ubuntu:23.04@sha256:2f18a21d414ad3c0a8eea08fec8f98d730c5c02ddb0d5fef9c60ca72ac53329c AS ubuntu-23.04
 
 FROM ${base_image}
 
