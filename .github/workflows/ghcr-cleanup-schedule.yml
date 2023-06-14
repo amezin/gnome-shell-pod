@@ -1,7 +1,5 @@
 name: Scheduled container registry cleanup
 
-concurrency: ${{ github.workflow }}
-
 on:
   workflow_dispatch:
   delete:

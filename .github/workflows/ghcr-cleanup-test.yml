@@ -1,7 +1,5 @@
 name: Container registry cleanup test
 
-concurrency: ${{ github.workflow }}
-
 on:
   workflow_dispatch:
   push:
