@@ -36,6 +36,9 @@ jobs:
           - image: debian-11
             dockerfile: debian.dockerfile
 
+          - image: debian-12
+            dockerfile: debian.dockerfile
+
           - image: ubuntu-20.04
             dockerfile: debian.dockerfile
 
