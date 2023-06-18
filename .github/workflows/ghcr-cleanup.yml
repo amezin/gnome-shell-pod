@@ -1,5 +1,3 @@
-concurrency: all-sync
-
 on:
   workflow_call:
     inputs:
