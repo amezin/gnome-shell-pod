@@ -4,7 +4,6 @@ concurrency: ${{ github.workflow }}
 
 on:
   workflow_dispatch:
-  delete:
   schedule:
     - cron: 26 11 * * 1
 
