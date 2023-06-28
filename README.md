@@ -25,7 +25,7 @@ EXTENSION_UUID="ddterm@amezin.github.com"
 IMAGE="ghcr.io/ddterm/gnome-shell-pod/fedora-36:master"
 PACKAGE_MOUNTPATH="/home/gnomeshell/.local/share/gnome-shell/extensions/${EXTENSION_UUID}"
 
-POD=$(podman run --rm --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
+POD=$(podman run --rm --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
 ```
 
 ### 2. Wait for user systemd and D-Bus to start:

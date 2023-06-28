@@ -23,7 +23,7 @@ RUN systemctl unmask systemd-logind.service console-getty.service getty.target &
     systemctl --global disable dbus-broker && \
     systemctl --global enable dbus-daemon && \
     systemctl mask systemd-oomd low-memory-monitor && \
-    systemctl --global mask xdg-document-portal gnome-keyring org.gnome.SettingsDaemon.Subscription && \
+    systemctl --global mask xdg-document-portal org.gnome.SettingsDaemon.Subscription && \
     adduser -m -U -G users,adm gnomeshell
 
 # dbus port
