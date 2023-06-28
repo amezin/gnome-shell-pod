@@ -5,8 +5,8 @@ Description=Run nested Wayland gnome session for display %I
 Environment="DISPLAY=%I"
 Environment="MUTTER_DEBUG_DUMMY_MODE_SPECS=1920x1080@30.0"
 Environment="XDG_SESSION_TYPE=wayland"
-ExecStartPre=/usr/bin/dbus-update-activation-environment --verbose --systemd XDG_SESSION_TYPE
-ExecStart=gnome-shell --nested --wayland --no-x11
+ExecStartPre=/usr/bin/dbus-update-activation-environment --verbose --systemd XDG_SESSION_TYPE MUTTER_DEBUG_DUMMY_MODE_SPECS
+ExecStart=gnome-session
 
 [Install]
 WantedBy=default.target
