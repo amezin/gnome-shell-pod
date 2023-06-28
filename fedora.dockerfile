@@ -16,9 +16,7 @@ COPY common fedora /
 
 # Start Xvfb via systemd on display :99.
 # Add the gnomeshell user with no password.
-# Unmask required on Fedora 32
-RUN systemctl unmask systemd-logind.service console-getty.service getty.target && \
-    systemctl enable xvfb@:99.service && \
+RUN systemctl enable xvfb@:99.service && \
     systemctl set-default multi-user.target && \
     systemctl --global disable dbus-broker && \
     systemctl --global enable dbus-daemon && \

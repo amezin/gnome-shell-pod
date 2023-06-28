@@ -7,8 +7,7 @@ COPY common archlinux /
 
 # Start Xvfb via systemd on display :99.
 # Add the gnomeshell user with no password.
-RUN systemctl unmask systemd-logind.service console-getty.service getty.target && \
-    systemctl enable xvfb@:99.service && \
+RUN systemctl enable xvfb@:99.service && \
     systemctl set-default multi-user.target && \
     systemctl mask systemd-oomd rtkit-daemon && \
     useradd -m -U -G users,adm gnomeshell && \
