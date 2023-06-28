@@ -4,7 +4,6 @@ Description=Run GNOME X11 session for display %I
 [Service]
 Environment="DISPLAY=%I"
 Environment="XDG_SESSION_TYPE=x11"
-ExecStartPre=/usr/bin/dbus-update-activation-environment --verbose --systemd XDG_SESSION_TYPE
 
 [Install]
 WantedBy=default.target
