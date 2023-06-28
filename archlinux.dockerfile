@@ -9,7 +9,7 @@ COPY common archlinux /
 # Add the gnomeshell user with no password.
 RUN systemctl enable xvfb@:99.service && \
     systemctl set-default multi-user.target && \
-    systemctl mask systemd-oomd rtkit-daemon && \
+    systemctl mask systemd-oomd low-memory-monitor rtkit-daemon && \
     useradd -m -U -G users,adm gnomeshell && \
     systemd-machine-id-setup
 

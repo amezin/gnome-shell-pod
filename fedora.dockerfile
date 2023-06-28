@@ -20,7 +20,7 @@ RUN systemctl enable xvfb@:99.service && \
     systemctl set-default multi-user.target && \
     systemctl --global disable dbus-broker && \
     systemctl --global enable dbus-daemon && \
-    systemctl mask systemd-oomd low-memory-monitor && \
+    systemctl mask systemd-oomd low-memory-monitor rtkit-daemon && \
     systemctl --global mask org.gnome.SettingsDaemon.Subscription && \
     adduser -m -U -G users,adm gnomeshell
 

@@ -20,7 +20,7 @@ COPY common debian /
 # Add the gnomeshell user with no password.
 RUN systemctl enable xvfb@:99.service && \
     systemctl set-default multi-user.target && \
-    systemctl mask systemd-oomd && \
+    systemctl mask systemd-oomd low-memory-monitor rtkit-daemon && \
     useradd -m -U -G users,adm gnomeshell
 
 # dbus port
