@@ -5,6 +5,8 @@ if [[ $# != 2 ]]; then
     exit 1
 fi
 
+SCRIPT_DIR=$(CDPATH="" cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &> /dev/null && pwd)
+
 function shutdown {
     podman exec "$CID" systemctl list-units --failed || true
     podman exec --user gnomeshell "$CID" set-env.sh systemctl --user list-units --failed || true
@@ -35,6 +37,10 @@ podman exec --user gnomeshell "$CID" set-env.sh wait-dbus-interface.sh -d org.gn
 dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=org.gnome.Shell /org/gnome/Shell org.gnome.Shell.Extensions.ListExtensions
 
 podman exec --user gnomeshell "$CID" set-env.sh systemctl --user is-system-running --wait
+
+podman cp "$SCRIPT_DIR/gtk3-app.js" "$CID:/usr/local/bin/"
+podman exec --user gnomeshell "$CID" \
+    bash -c 'export $(set-env.sh systemctl --user show-environment | xargs -d "\n"); timeout --foreground --kill-after=1s 10s gjs /usr/local/bin/gtk3-app.js'
 
 sleep 15
 
