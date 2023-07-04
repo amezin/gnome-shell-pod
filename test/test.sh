@@ -38,9 +38,12 @@ dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=org.gnome.Shell /org/gnome/
 
 podman exec --user gnomeshell "$CID" set-env.sh systemctl --user is-system-running --wait
 
+USER_ID="$(podman exec --user gnomeshell "$CID" id -u)"
+podman cp "$SCRIPT_DIR/gnome.shell.pod.test.service" "$CID:/run/user/$USER_ID/dbus-1/services/"
 podman cp "$SCRIPT_DIR/gtk3-app.js" "$CID:/usr/local/bin/"
-podman exec --user gnomeshell "$CID" \
-    bash -c 'export $(set-env.sh systemctl --user show-environment | xargs -d "\n"); timeout --foreground --kill-after=1s 10s gjs /usr/local/bin/gtk3-app.js'
+
+dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ReloadConfig
+dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=gnome.shell.pod.test /gnome/shell/pod/test gnome.shell.pod.test.Test.TestMethod
 
 sleep 15
 
