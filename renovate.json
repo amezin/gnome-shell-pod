@@ -15,10 +15,10 @@
     "major": {
       "enabled": false
     },
-    "groupName": "Base images",
-    "automerge": true
+    "groupName": "Base images"
   },
   "lockFileMaintenance": {
     "automerge": true
-  }
+  },
+  "automerge": true
 }
