@@ -22,7 +22,9 @@ RUN systemctl enable xvfb@:99.service && \
     systemctl --global enable dbus-daemon && \
     systemctl mask systemd-oomd low-memory-monitor rtkit-daemon udisks2 && \
     systemctl --global mask org.gnome.SettingsDaemon.Subscription && \
-    adduser -m -U -G users,adm gnomeshell
+    adduser -m -U -G users,adm gnomeshell && \
+    mkdir -p /var/lib/systemd/linger && \
+    touch /var/lib/systemd/linger/gnomeshell
 
 # dbus port
 EXPOSE 1234

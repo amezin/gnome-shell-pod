@@ -11,6 +11,8 @@ RUN systemctl enable xvfb@:99.service && \
     systemctl set-default multi-user.target && \
     systemctl mask systemd-oomd low-memory-monitor rtkit-daemon udisks2 && \
     useradd -m -U -G users,adm gnomeshell && \
+    mkdir -p /var/lib/systemd/linger && \
+    touch /var/lib/systemd/linger/gnomeshell && \
     systemd-machine-id-setup
 
 # dbus port
