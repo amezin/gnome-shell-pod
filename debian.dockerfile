@@ -23,7 +23,11 @@ RUN systemctl enable xvfb@:99.service && \
     systemctl mask systemd-oomd low-memory-monitor rtkit-daemon udisks2 && \
     useradd -m -U -G users,adm gnomeshell && \
     mkdir -p /var/lib/systemd/linger && \
-    touch /var/lib/systemd/linger/gnomeshell
+    touch /var/lib/systemd/linger/gnomeshell && \
+    su -l gnomeshell -c ' \
+        mkdir -p $HOME/.config/systemd/user/sockets.target.wants/ && \
+        ln -s /etc/xdg/systemd/user/dbus-proxy@.socket $HOME/.config/systemd/user/sockets.target.wants/dbus-proxy@1234.socket \
+    '
 
 # dbus port
 EXPOSE 1234

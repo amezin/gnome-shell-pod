@@ -1,0 +1,10 @@
+[Unit]
+Description=D-Bus TCP proxy on port %I
+Requires=dbus.service
+After=dbus.service
+Requires=dbus-proxy@%i.socket
+After=dbus-proxy@%i.socket
+
+[Service]
+Type=exec
+ExecStart=/lib/systemd/systemd-socket-proxyd %t/bus
