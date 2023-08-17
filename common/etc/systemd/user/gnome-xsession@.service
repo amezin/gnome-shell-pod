@@ -2,6 +2,7 @@
 Description=Run GNOME X11 session for display %I
 
 [Service]
+Type=exec
 Environment="DISPLAY=%I"
 Environment="XDG_SESSION_TYPE=x11"
 ExecStart=gnome-session
