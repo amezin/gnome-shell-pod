@@ -12,7 +12,7 @@ RUN dnf update -y && \
                    PackageKit PackageKit-glib \
                    --nodocs --setopt install_weak_deps=False && dnf clean all -y
 
-COPY common fedora /
+COPY common /
 
 # Start Xvfb via systemd on display :99.
 # Add the gnomeshell user with no password.

@@ -3,7 +3,7 @@ FROM archlinux:latest@sha256:e21266b93a65192313d3857651abf2b5a194bad9438b3d8a565
 RUN pacman -Syu --noconfirm gnome-shell vte3 xorg-server-xvfb xorg-xinit mesa packagekit && \
     pacman -Scc --noconfirm
 
-COPY common archlinux /
+COPY common /
 
 # Start Xvfb via systemd on display :99.
 # Add the gnomeshell user with no password.

@@ -14,7 +14,7 @@ RUN apt-get update -y && \
         gnome-session gjs dbus-user-session gir1.2-vte-2.91 xvfb \
         packagekit gir1.2-packagekitglib-1.0
 
-COPY common debian /
+COPY common /
 
 # Start Xvfb via systemd on display :99.
 # Add the gnomeshell user with no password.
