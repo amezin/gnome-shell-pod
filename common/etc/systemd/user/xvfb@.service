@@ -1,7 +1,7 @@
 [Unit]
 Description=Run Xvfb for display %I
-After=network.target
-Before=console-getty.service
+Requires=dbus.socket
+After=dbus.socket
 
 [Service]
 Type=forking
@@ -13,6 +13,4 @@ PIDFile=%t/xvfb@%I.pid
 
 ExecStartPre=mkdir -p "${XVFB_FBDIR}"
 ExecStart=/usr/local/bin/xvfb.sh -ac -listen tcp %I -screen 0 "${XVFB_RESOLUTION}" -fbdir "${XVFB_FBDIR}"
-
-[Install]
-WantedBy=multi-user.target
+ExecStopPost=systemctl --user unset-environment DISPLAY

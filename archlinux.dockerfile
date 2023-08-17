@@ -5,10 +5,7 @@ RUN pacman -Syu --noconfirm gnome-shell vte3 xorg-server-xvfb xorg-xinit mesa pa
 
 COPY common /
 
-# Start Xvfb via systemd on display :99.
-# Add the gnomeshell user with no password.
-RUN systemctl enable xvfb@:99.service && \
-    systemctl set-default multi-user.target && \
+RUN systemctl set-default multi-user.target && \
     systemctl mask systemd-oomd low-memory-monitor rtkit-daemon udisks2 && \
     useradd -m -U -G users,adm gnomeshell && \
     mkdir -p /var/lib/systemd/linger && \

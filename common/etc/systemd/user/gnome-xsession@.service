@@ -1,9 +1,10 @@
 [Unit]
 Description=Run GNOME X11 session for display %I
+Requires=xvfb@%i.service
+After=xvfb@%i.service
 
 [Service]
 Type=exec
-Environment="DISPLAY=%I"
 Environment="XDG_SESSION_TYPE=x11"
 ExecStart=gnome-session
 

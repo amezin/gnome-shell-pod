@@ -13,3 +13,5 @@ read -r DISPLAY_NUMBER < <(
 
     exec Xvfb "$@" -displayfd 1
 )
+
+systemctl --user set-environment "DISPLAY=:${DISPLAY_NUMBER}"

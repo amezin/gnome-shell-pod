@@ -14,10 +14,7 @@ RUN dnf update -y && \
 
 COPY common /
 
-# Start Xvfb via systemd on display :99.
-# Add the gnomeshell user with no password.
-RUN systemctl enable xvfb@:99.service && \
-    systemctl set-default multi-user.target && \
+RUN systemctl set-default multi-user.target && \
     systemctl --global disable dbus-broker && \
     systemctl --global enable dbus-daemon && \
     systemctl mask systemd-oomd low-memory-monitor rtkit-daemon udisks2 && \
