@@ -4,11 +4,15 @@ After=network.target
 Before=console-getty.service
 
 [Service]
-Type=exec
-Environment="XVFB_SCREENS=-screen 0 1920x1080x24"
-Environment="XVFB_FBDIR=/run"
-ExecStartPre=mkdir -p ${XVFB_FBDIR}
-ExecStart=Xvfb -ac -listen tcp %I $XVFB_SCREENS -fbdir ${XVFB_FBDIR}
+Type=forking
+
+Environment="XVFB_RESOLUTION=1920x1080x24"
+Environment="XVFB_FBDIR=%t"
+
+PIDFile=%t/xvfb@%I.pid
+
+ExecStartPre=mkdir -p "${XVFB_FBDIR}"
+ExecStart=/usr/local/bin/xvfb.sh -ac -listen tcp %I -screen 0 "${XVFB_RESOLUTION}" -fbdir "${XVFB_FBDIR}"
 
 [Install]
 WantedBy=multi-user.target
