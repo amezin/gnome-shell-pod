@@ -87,8 +87,8 @@ jobs:
 
       - run: DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends x11-utils
 
-      - name: Test gnome-xsession
-        run: sudo test/test.sh $(cat .podman-image-id) gnome-xsession
+      - name: Test gnome-session-x11
+        run: sudo test/test.sh $(cat .podman-image-id) gnome-session-x11
 
-      - name: Test gnome-wayland-nested
-        run: sudo test/test.sh $(cat .podman-image-id) gnome-wayland-nested
+      - name: Test gnome-session-wayland
+        run: sudo test/test.sh $(cat .podman-image-id) gnome-session-wayland

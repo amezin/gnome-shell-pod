@@ -7,17 +7,14 @@ FROM quay.io/centos/centos:stream9@sha256:5a21a157fdb9b8e7c5cd5608d5b06911bb0d8b
 FROM ${base_image}
 
 RUN dnf update -y && \
-    dnf install -y gnome-session-xsession gnome-extensions-app gjs vte291 \
+    dnf install -y gnome-session-xsession gnome-extensions-app gjs gdm vte291 \
                    xorg-x11-server-Xvfb mesa-dri-drivers \
                    PackageKit PackageKit-glib \
                    --nodocs --setopt install_weak_deps=False && dnf clean all -y
 
 COPY common /
 
-# Start Xvfb via systemd on display :99.
-# Add the gnomeshell user with no password.
-RUN systemctl enable xvfb@:99.service && \
-    systemctl set-default multi-user.target && \
+RUN systemctl set-default multi-user.target && \
     systemctl --global disable dbus-broker && \
     systemctl --global enable dbus-daemon && \
     systemctl mask systemd-oomd low-memory-monitor rtkit-daemon udisks2 && \

@@ -1,7 +1,5 @@
 [Unit]
 Description=Run Xvfb for display %I
-After=network.target
-Before=console-getty.service
 
 [Service]
 Type=forking

@@ -1,0 +1,17 @@
+[Unit]
+Description=Run GNOME X11 session for display %I
+Requires=xvfb@%i.service
+After=xvfb@%i.service
+After=systemd-user-sessions.service
+RefuseManualStop=true
+
+[Service]
+Environment="DISPLAY=%I"
+Environment="XDG_SESSION_TYPE=x11"
+Environment="XDG_SEAT=seat0"
+ExecStart=gnome-session
+User=gnomeshell
+PAMName=gdm-autologin
+
+[Install]
+WantedBy=multi-user.target

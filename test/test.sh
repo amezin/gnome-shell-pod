@@ -31,7 +31,7 @@ DBUS_ENDPOINT="$(podman port "$CID" "$DBUS_CONTAINER_PORT")"
 DBUS_ADDRESS="tcp:host=${DBUS_ENDPOINT%%:*},port=${DBUS_ENDPOINT#*:}"
 dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.Peer.Ping
 
-podman exec --user gnomeshell "$CID" set-env.sh systemctl --user start "$2@:99"
+podman exec "$CID" systemctl start "$2@:99"
 podman exec --user gnomeshell "$CID" set-env.sh wait-dbus-interface.sh -d org.gnome.Shell -o /org/gnome/Shell -i org.gnome.Shell.Extensions
 
 dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=org.gnome.Shell /org/gnome/Shell org.gnome.Shell.Extensions.ListExtensions

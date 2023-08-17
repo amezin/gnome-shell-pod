@@ -1,0 +1,18 @@
+[Unit]
+Description=Run nested GNOME Wayland session for display %I
+Requires=xvfb@%i.service
+After=xvfb@%i.service
+After=systemd-user-sessions.service
+RefuseManualStop=true
+
+[Service]
+Environment="DISPLAY=%I"
+Environment="MUTTER_DEBUG_DUMMY_MODE_SPECS=1920x1080@30.0"
+Environment="XDG_SESSION_TYPE=wayland"
+Environment="XDG_SEAT=seat0"
+ExecStart=gnome-session
+User=gnomeshell
+PAMName=gdm-autologin
+
+[Install]
+WantedBy=multi-user.target

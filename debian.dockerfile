@@ -10,15 +10,12 @@ FROM ${base_image}
 
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        gnome-session gjs dbus-user-session gir1.2-vte-2.91 xvfb \
+        gnome-session gjs dbus-user-session gdm3 gir1.2-vte-2.91 xvfb \
         packagekit gir1.2-packagekitglib-1.0
 
 COPY common /
 
-# Start Xvfb via systemd on display :99.
-# Add the gnomeshell user with no password.
-RUN systemctl enable xvfb@:99.service && \
-    systemctl set-default multi-user.target && \
+RUN systemctl set-default multi-user.target && \
     systemctl mask systemd-oomd low-memory-monitor rtkit-daemon udisks2 && \
     useradd -m -U -G users,adm gnomeshell && \
     mkdir -p /var/lib/systemd/linger && \

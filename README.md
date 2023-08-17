@@ -37,14 +37,14 @@ podman exec --user gnomeshell "${POD}" set-env.sh wait-user-bus.sh
 ### 3. Start GNOME Shell:
 
 ```sh
-podman exec --user gnomeshell "${POD}" set-env.sh systemctl --user start "gnome-xsession@:99"
+podman exec --user gnomeshell "${POD}" systemctl start "gnome-session-x11@:99"
 ```
 
 This command starts X11 GNOME session. It is also possible to start a Wayland
 session:
 
 ```sh
-podman exec --user gnomeshell "${POD}" set-env.sh systemctl --user start "gnome-wayland-nested@:99"
+podman exec --user gnomeshell "${POD}" systemctl start "gnome-session-wayland@:99"
 ```
 
 It still runs in Xvfb, but in nested mode. Without window manager running on

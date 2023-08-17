@@ -1,14 +1,11 @@
 FROM archlinux:latest@sha256:e21266b93a65192313d3857651abf2b5a194bad9438b3d8a565aeeb3b4400d5e
 
-RUN pacman -Syu --noconfirm gnome-shell vte3 xorg-server-xvfb xorg-xinit mesa packagekit && \
+RUN pacman -Syu --noconfirm gnome-shell vte3 xorg-server-xvfb xorg-xinit mesa packagekit gdm && \
     pacman -Scc --noconfirm
 
 COPY common /
 
-# Start Xvfb via systemd on display :99.
-# Add the gnomeshell user with no password.
-RUN systemctl enable xvfb@:99.service && \
-    systemctl set-default multi-user.target && \
+RUN systemctl set-default multi-user.target && \
     systemctl mask systemd-oomd low-memory-monitor rtkit-daemon udisks2 && \
     useradd -m -U -G users,adm gnomeshell && \
     mkdir -p /var/lib/systemd/linger && \
