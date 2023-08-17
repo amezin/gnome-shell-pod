@@ -17,7 +17,7 @@ RUN systemctl enable xvfb@:99.service && \
         mkdir -p $HOME/.config/systemd/user/sockets.target.wants/ && \
         ln -s /etc/xdg/systemd/user/dbus-proxy@.socket $HOME/.config/systemd/user/sockets.target.wants/dbus-proxy@1234.socket \
     ' && \
-    systemd-machine-id-setup
+    truncate --size 0 /etc/machine-id
 
 # dbus port
 EXPOSE 1234
