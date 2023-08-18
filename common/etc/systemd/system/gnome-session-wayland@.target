@@ -1,0 +1,5 @@
+[Unit]
+Description=Nested GNOME Wayland session for display %I
+RefuseManualStop=true
+Requires=gnome-session-wayland@%i.service
+Requires=multi-user.target

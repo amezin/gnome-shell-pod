@@ -3,6 +3,7 @@ Description=Run GNOME X11 session for display %I
 Requires=xvfb@%i.service
 After=xvfb@%i.service
 After=systemd-user-sessions.service
+PartOf=gnome-session-x11@%i.target
 RefuseManualStop=true
 
 [Service]

@@ -14,7 +14,7 @@ RUN dnf update -y && \
 
 COPY common /
 
-RUN systemctl set-default multi-user.target && \
+RUN systemctl set-default gnome-session-x11.target && \
     systemctl --global disable dbus-broker && \
     systemctl --global enable dbus-daemon && \
     systemctl mask systemd-oomd low-memory-monitor rtkit-daemon udisks2 && \

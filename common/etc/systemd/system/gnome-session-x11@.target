@@ -1,0 +1,5 @@
+[Unit]
+Description=GNOME X11 session for display %I
+RefuseManualStop=true
+Requires=gnome-session-x11@%i.service
+Requires=multi-user.target

@@ -1,0 +1,4 @@
+[Unit]
+Description=GNOME X11 session for default display :99
+RefuseManualStop=true
+BindsTo=gnome-session-x11@:99.target

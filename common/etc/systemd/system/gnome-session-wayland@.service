@@ -3,6 +3,7 @@ Description=Run nested GNOME Wayland session for display %I
 Requires=xvfb@%i.service
 After=xvfb@%i.service
 After=systemd-user-sessions.service
+PartOf=gnome-session-wayland@%i.target
 RefuseManualStop=true
 
 [Service]

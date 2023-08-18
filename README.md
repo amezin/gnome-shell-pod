@@ -28,29 +28,13 @@ PACKAGE_MOUNTPATH="/home/gnomeshell/.local/share/gnome-shell/extensions/${EXTENS
 POD=$(podman run --rm --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
 ```
 
-### 2. Wait for user systemd and D-Bus to start:
+### 2. Wait for user D-Bus bus to start:
 
 ```sh
 podman exec --user gnomeshell "${POD}" set-env.sh wait-user-bus.sh
 ```
 
-### 3. Start GNOME Shell:
-
-```sh
-podman exec --user gnomeshell "${POD}" systemctl start "gnome-session-x11@:99"
-```
-
-This command starts X11 GNOME session. It is also possible to start a Wayland
-session:
-
-```sh
-podman exec --user gnomeshell "${POD}" systemctl start "gnome-session-wayland@:99"
-```
-
-It still runs in Xvfb, but in nested mode. Without window manager running on
-the "top level", the window has no decorations, and is effectively full screen.
-
-### 4. Wait for GNOME Shell to complete startup:
+### 3. Wait for GNOME Shell to complete startup:
 
 ```sh
 podman exec --user gnomeshell "${POD}" set-env.sh wait-dbus-interface.sh -d org.gnome.Shell -o /org/gnome/Shell -i org.gnome.Shell.Extensions
@@ -62,10 +46,37 @@ podman exec --user gnomeshell "${POD}" set-env.sh wait-dbus-interface.sh -d org.
 available. For example, if your extension exports a D-Bus interface, you could
 use this script to wait for it.
 
-### 5. Enable the extension:
+### 4. Enable the extension:
 
 ```sh
-gnome-extensions enable "${EXTENSION_UUID}"
+podman exec --user gnomeshell "${POD}" set-env.sh gnome-extensions enable "${EXTENSION_UUID}"
+```
+
+## CGroups v1/v2
+
+The default systemd command line sets `systemd.unified_cgroup_hierarchy=0`
+(CGroups v1 mode) for compatibility with older distributions on the host side.
+
+## Wayland
+
+By default, X11 session starts.
+
+To start Wayland session, add `systemd.unit=gnome-session-wayland.target` to
+the systemd command line:
+
+```sh
+podman run --rm --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}" /sbin/init systemd.unified_cgroup_hierarchy=0 systemd.unit=gnome-session-wayland.target
+```
+
+It still runs in Xvfb, but in nested mode. Without window manager running on
+the "top level", the window has no decorations, and is effectively full screen.
+
+If you don't want GNOME session to start automatically, you could pass
+`systemd.unit=multi-user.target`. Then you could activate the necessary target
+manually:
+
+```sh
+podman exec "${POD}" systemctl start gnome-session-wayland.target
 ```
 
 ## D-Bus

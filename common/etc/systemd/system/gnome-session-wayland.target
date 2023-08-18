@@ -1,0 +1,4 @@
+[Unit]
+Description=Nested GNOME Wayland session for default display :99
+RefuseManualStop=true
+BindsTo=gnome-session-wayland@:99.target

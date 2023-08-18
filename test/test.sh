@@ -16,7 +16,7 @@ function shutdown {
 set -ex
 
 CAPS="SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK"
-CID="$(podman create -Pt --cap-add="$CAPS" "$1")"
+CID="$(podman create -Pt --cap-add="$CAPS" "$1" /sbin/init systemd.unified_cgroup_hierarchy=0 "systemd.unit=$2.target")"
 
 trap shutdown EXIT
 
@@ -31,9 +31,7 @@ DBUS_ENDPOINT="$(podman port "$CID" "$DBUS_CONTAINER_PORT")"
 DBUS_ADDRESS="tcp:host=${DBUS_ENDPOINT%%:*},port=${DBUS_ENDPOINT#*:}"
 dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.Peer.Ping
 
-podman exec "$CID" systemctl start "$2@:99"
 podman exec --user gnomeshell "$CID" set-env.sh wait-dbus-interface.sh -d org.gnome.Shell -o /org/gnome/Shell -i org.gnome.Shell.Extensions
-
 dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=org.gnome.Shell /org/gnome/Shell org.gnome.Shell.Extensions.ListExtensions
 
 podman exec --user gnomeshell "$CID" set-env.sh systemctl --user is-system-running --wait
