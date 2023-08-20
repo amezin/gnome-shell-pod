@@ -25,7 +25,7 @@ EXTENSION_UUID="ddterm@amezin.github.com"
 IMAGE="ghcr.io/ddterm/gnome-shell-pod/fedora-36:master"
 PACKAGE_MOUNTPATH="/home/gnomeshell/.local/share/gnome-shell/extensions/${EXTENSION_UUID}"
 
-POD=$(podman run --rm --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
+CID=$(podman run --rm --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
 ```
 
 ### 2. Wait for the system to start:
@@ -33,19 +33,19 @@ POD=$(podman run --rm --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SER
 Wait for system D-Bus to start:
 
 ```sh
-podman exec "${POD}" busctl --watch-bind=true status
+podman exec "${CID}" busctl --watch-bind=true status
 ```
 
 Wait for the system to complete startup:
 
 ```sh
-podman exec "${POD}" systemctl is-system-running --wait
+podman exec "${CID}" systemctl is-system-running --wait
 ```
 
 ### 3. Enable the extension:
 
 ```sh
-podman exec --user gnomeshell "${POD}" set-env.sh gnome-extensions enable "${EXTENSION_UUID}"
+podman exec --user gnomeshell "${CID}" set-env.sh gnome-extensions enable "${EXTENSION_UUID}"
 ```
 
 ## CGroups v1/v2
@@ -72,7 +72,7 @@ If you don't want GNOME session to start automatically, you could pass
 manually:
 
 ```sh
-podman exec "${POD}" systemctl start gnome-session-wayland.target
+podman exec "${CID}" systemctl start gnome-session-wayland.target
 ```
 
 ## D-Bus
@@ -83,7 +83,7 @@ add `--publish`/`--publish-all` option to `podman run` (see `podman` docs).
 To get the host-side port number, use `podman port` command:
 
 ```sh
-podman port "${POD}" 1234
+podman port "${CID}" 1234
 ```
 
 It will output something like:
@@ -124,7 +124,7 @@ by `--publish-all` too.
 To get the host-side port number, use `podman port` command:
 
 ```sh
-podman port "${POD}" 6099
+podman port "${CID}" 6099
 ```
 
 It will output something like:
