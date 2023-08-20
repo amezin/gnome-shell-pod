@@ -33,13 +33,13 @@ POD=$(podman run --rm --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SER
 Wait for system D-Bus to start:
 
 ```sh
-podman exec "$POD" busctl --watch-bind=true status
+podman exec "${POD}" busctl --watch-bind=true status
 ```
 
 Wait for the system to complete startup:
 
 ```sh
-podman exec "$POD" systemctl is-system-running --wait
+podman exec "${POD}" systemctl is-system-running --wait
 ```
 
 ### 3. Enable the extension:
@@ -159,27 +159,31 @@ podman container inspect --format='{{index .Config.Labels "x11-port"}}'
 ### Debian/Ubuntu image
 
 ```sh
-podman build -f debian.dockerfile .
+podman build -f debian.dockerfile --format docker .
 ```
 
 By default it builds on top of the latest stable Debian release (`debian:latest` on Docker Hub).
 
+` --format docker` is necessary for health check support.
+
 To choose another base image/distro, pass `--build-arg base_image=...`:
 
 ```sh
-podman build -f debian.dockerfile --build-arg base_image=ubuntu:20.04 .
+podman build -f debian.dockerfile --format docker --build-arg base_image=ubuntu:20.04 .
 ```
 
 ### Fedora image
 
 ```sh
-podman build -f fedora.dockerfile .
+podman build -f fedora.dockerfile --format docker .
 ```
 
 By default it builds on top of the latest stable Fedora release (`fedora:latest` on registry.fedoraproject.org).
 
+` --format docker` is necessary for health check support.
+
 To choose another base image/distro, pass `--build-arg base_image=...`:
 
 ```sh
-podman build -f fedora.dockerfile --build-arg base_image=registry.fedoraproject.org/fedora:34 .
+podman build -f fedora.dockerfile --format docker --build-arg base_image=registry.fedoraproject.org/fedora:34 .
 ```

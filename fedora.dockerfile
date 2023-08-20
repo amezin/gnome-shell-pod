@@ -36,4 +36,6 @@ LABEL user-dbus-port=1234
 EXPOSE 6099
 LABEL x11-port=6099 x11-display-number=99
 
+HEALTHCHECK CMD busctl --watch-bind=true status && systemctl is-system-running --wait
+
 CMD [ "/usr/sbin/init", "systemd.unified_cgroup_hierarchy=0" ]
