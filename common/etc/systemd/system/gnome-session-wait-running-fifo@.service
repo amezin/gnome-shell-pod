@@ -1,0 +1,15 @@
+[Unit]
+Description=Create fifo for GNOME session startup synchronization on display %I
+PartOf=gnome-session-wait-running@%i.service
+Before=gnome-session-wait-running@%i.service
+Before=gnome-session-x11@%i.service gnome-session-wayland@%i.service
+RefuseManualStart=true
+RefuseManualStop=true
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStartPre=rm -f "%T/%N"
+ExecStart=mkfifo "%T/%N"
+ExecStopPost=rm -f "%T/%N"
+User=gnomeshell

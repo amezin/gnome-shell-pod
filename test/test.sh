@@ -25,13 +25,12 @@ X11_CONTAINER_PORT="$(podman container inspect --format='{{index .Config.Labels 
 
 podman start --attach --sig-proxy=false "$CID" &
 podman wait --condition=running "$CID"
-podman exec --user gnomeshell "$CID" set-env.sh wait-user-bus.sh
+podman exec "$CID" busctl --watch-bind=true status
+podman exec "$CID" systemctl is-system-running --wait
 
 DBUS_ENDPOINT="$(podman port "$CID" "$DBUS_CONTAINER_PORT")"
 DBUS_ADDRESS="tcp:host=${DBUS_ENDPOINT%%:*},port=${DBUS_ENDPOINT#*:}"
 dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.Peer.Ping
-
-podman exec --user gnomeshell "$CID" set-env.sh wait-dbus-interface.sh -d org.gnome.Shell -o /org/gnome/Shell -i org.gnome.Shell.Extensions
 dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=org.gnome.Shell /org/gnome/Shell org.gnome.Shell.Extensions.ListExtensions
 
 podman exec --user gnomeshell "$CID" set-env.sh systemctl --user is-system-running --wait

@@ -28,25 +28,21 @@ PACKAGE_MOUNTPATH="/home/gnomeshell/.local/share/gnome-shell/extensions/${EXTENS
 POD=$(podman run --rm --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
 ```
 
-### 2. Wait for user D-Bus bus to start:
+### 2. Wait for the system to start:
+
+Wait for system D-Bus to start:
 
 ```sh
-podman exec --user gnomeshell "${POD}" set-env.sh wait-user-bus.sh
+podman exec "$POD" busctl --watch-bind=true status
 ```
 
-### 3. Wait for GNOME Shell to complete startup:
+Wait for the system to complete startup:
 
 ```sh
-podman exec --user gnomeshell "${POD}" set-env.sh wait-dbus-interface.sh -d org.gnome.Shell -o /org/gnome/Shell -i org.gnome.Shell.Extensions
+podman exec "$POD" systemctl is-system-running --wait
 ```
 
-`org.gnome.Shell.Extensions` interface is necessary to enable the extension.
-
-`wait-dbus-interface.sh` can be used to wait for any D-Bus interface to become
-available. For example, if your extension exports a D-Bus interface, you could
-use this script to wait for it.
-
-### 4. Enable the extension:
+### 3. Enable the extension:
 
 ```sh
 podman exec --user gnomeshell "${POD}" set-env.sh gnome-extensions enable "${EXTENSION_UUID}"

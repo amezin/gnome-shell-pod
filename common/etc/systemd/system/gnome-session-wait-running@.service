@@ -1,0 +1,14 @@
+[Unit]
+Description=Wait for GNOME session on display %I to complete startup
+Requires=%p-fifo@%i.service
+After=%p-fifo@%i.service
+PartOf=gnome-session-x11@%i.target gnome-session-wayland@%i.target
+RefuseManualStart=true
+RefuseManualStop=true
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=head -n 1
+StandardInput=file:%T/%p-fifo@%i
+User=gnomeshell
