@@ -83,12 +83,12 @@ jobs:
             ${{ steps.docker_meta.outputs.tags }}
           cache-to: type=inline
 
-      - run: sudo podman pull docker-daemon:${{ steps.docker_build.outputs.imageid }} | tee .podman-image-id
+      - run: podman pull docker-daemon:${{ steps.docker_build.outputs.imageid }} | tee .podman-image-id
 
       - run: DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends x11-utils
 
       - name: Test gnome-session-x11
-        run: sudo test/test.sh $(cat .podman-image-id) gnome-session-x11
+        run: test/test.sh $(cat .podman-image-id) gnome-session-x11
 
       - name: Test gnome-session-wayland
-        run: sudo test/test.sh $(cat .podman-image-id) gnome-session-wayland
+        run: test/test.sh $(cat .podman-image-id) gnome-session-wayland
