@@ -181,5 +181,5 @@ By default it builds on top of the latest stable Fedora release (`fedora:latest`
 To choose another base image/distro, pass `--build-arg base_image=...`:
 
 ```sh
-podman build -f debian.dockerfile --build-arg base_image=registry.fedoraproject.org/fedora:34 .
+podman build -f fedora.dockerfile --build-arg base_image=registry.fedoraproject.org/fedora:34 .
 ```
