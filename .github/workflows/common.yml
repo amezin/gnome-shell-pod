@@ -90,5 +90,19 @@ jobs:
       - name: Test gnome-session-x11
         run: test/test.sh $(cat .podman-image-id) gnome-session-x11
 
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.image }}-x11-screenshot
+          path: test/screenshot.png
+
+      - run: rm -v -f test/screenshot.png
+
       - name: Test gnome-session-wayland
         run: test/test.sh $(cat .podman-image-id) gnome-session-wayland
+
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.image }}-wayland-screenshot
+          path: test/screenshot.png

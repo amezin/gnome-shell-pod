@@ -48,4 +48,7 @@ podman exec "$CID" systemctl is-system-running --wait
 podman exec --user gnomeshell "$CID" set-env.sh systemctl --user is-system-running --wait
 
 X11_ENDPOINT="$(podman port "$CID" "$X11_CONTAINER_PORT")"
-DISPLAY="${X11_ENDPOINT%%:*}:$(( ${X11_ENDPOINT#*:} - 6000 ))" xdpyinfo
+export DISPLAY="${X11_ENDPOINT%%:*}:$(( ${X11_ENDPOINT#*:} - 6000 ))"
+
+xdpyinfo
+import -window root "$SCRIPT_DIR/screenshot.png"
