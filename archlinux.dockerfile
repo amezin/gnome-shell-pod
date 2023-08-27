@@ -3,7 +3,7 @@ FROM archlinux:latest@sha256:e21266b93a65192313d3857651abf2b5a194bad9438b3d8a565
 RUN pacman -Syu --noconfirm gnome-shell vte3 xorg-server-xvfb xorg-xinit mesa packagekit gdm && \
     pacman -Scc --noconfirm
 
-COPY common /
+COPY common archlinux /
 
 RUN systemctl set-default gnome-session-x11.target && \
     systemctl mask systemd-oomd low-memory-monitor rtkit-daemon udisks2 && \
@@ -14,7 +14,8 @@ RUN systemctl set-default gnome-session-x11.target && \
         mkdir -p $HOME/.config/systemd/user/sockets.target.wants/ && \
         ln -s /etc/xdg/systemd/user/dbus-proxy@.socket $HOME/.config/systemd/user/sockets.target.wants/dbus-proxy@1234.socket \
     ' && \
-    truncate --size 0 /etc/machine-id
+    truncate --size 0 /etc/machine-id && \
+    dconf update
 
 # dbus port
 EXPOSE 1234

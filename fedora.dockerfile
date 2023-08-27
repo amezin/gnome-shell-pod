@@ -26,7 +26,8 @@ RUN systemctl set-default gnome-session-x11.target && \
         mkdir -p $HOME/.config/systemd/user/sockets.target.wants/ && \
         ln -s /etc/xdg/systemd/user/dbus-proxy@.socket $HOME/.config/systemd/user/sockets.target.wants/dbus-proxy@1234.socket \
     ' && \
-    truncate --size 0 /etc/machine-id
+    truncate --size 0 /etc/machine-id && \
+    dconf update
 
 # dbus port
 EXPOSE 1234

@@ -13,7 +13,7 @@ RUN apt-get update -y && \
         gnome-session gjs dbus-user-session gdm3 gir1.2-vte-2.91 xvfb \
         packagekit gir1.2-packagekitglib-1.0
 
-COPY common /
+COPY common debian /
 
 RUN systemctl set-default gnome-session-x11.target && \
     systemctl mask systemd-oomd low-memory-monitor rtkit-daemon udisks2 && \
@@ -24,7 +24,8 @@ RUN systemctl set-default gnome-session-x11.target && \
         mkdir -p $HOME/.config/systemd/user/sockets.target.wants/ && \
         ln -s /etc/xdg/systemd/user/dbus-proxy@.socket $HOME/.config/systemd/user/sockets.target.wants/dbus-proxy@1234.socket \
     ' && \
-    truncate --size 0 /etc/machine-id
+    truncate --size 0 /etc/machine-id && \
+    dconf update
 
 # dbus port
 EXPOSE 1234
