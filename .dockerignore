@@ -1,5 +1,4 @@
-.git
-.github
-test
-README.md
-LICENSE
+*
+!archlinux/
+!common/
+!debian/
