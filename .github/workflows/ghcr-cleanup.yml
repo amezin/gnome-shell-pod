@@ -20,7 +20,7 @@ jobs:
         working-directory: .github/registry-cleanup
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v3
       - run: npm install
       - run: ./cleanup.js ${{ inputs.dry-run && '-n' || '' }} -t "${{ secrets.packages-api-token }}" -j4
