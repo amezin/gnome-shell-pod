@@ -15,6 +15,9 @@
     "major": {
       "enabled": false
     },
+    "patch": {
+      "enabled": false
+    },
     "groupName": "Base images"
   },
   "lockFileMaintenance": {
