@@ -8,8 +8,6 @@ on:
     tags:
       - "*"
     paths-ignore:
-      - .github/registry-cleanup/**
-      - .github/workflows/ghcr-*.yml
       - renovate.json
       - README.md
       - LICENSE
