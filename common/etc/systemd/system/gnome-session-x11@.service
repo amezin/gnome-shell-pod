@@ -10,6 +10,7 @@ RefuseManualStop=true
 Environment="DISPLAY=%I"
 Environment="XDG_SESSION_TYPE=x11"
 Environment="XDG_SEAT=seat0"
+Environment="LIBGL_ALWAYS_SOFTWARE=1"
 ExecStart=gnome-session
 User=gnomeshell
 PAMName=gdm-autologin
