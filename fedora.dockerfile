@@ -6,7 +6,8 @@ FROM quay.io/centos/centos:stream9@sha256:1ad5272613140d855a997a0d1b4f489a51cd93
 
 FROM ${base_image}
 
-RUN dnf install -y gnome-session-xsession gnome-extensions-app gjs gdm vte291 \
+RUN if grep -i centos /etc/os-release; then dnf install -y epel-release --nodocs --setopt install_weak_deps=False; fi && \
+    dnf install -y gnome-session-xsession gnome-extensions-app gjs gdm vte291 \
                    xorg-x11-server-Xvfb mesa-dri-drivers \
                    PackageKit PackageKit-glib \
                    --nodocs --setopt install_weak_deps=False && dnf clean all -y
