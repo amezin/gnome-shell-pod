@@ -8,7 +8,7 @@ FROM ${base_image}
 
 RUN if grep -i centos /etc/os-release; then dnf install -y epel-release --nodocs --setopt install_weak_deps=False; fi && \
     dnf install -y gnome-session-xsession gnome-extensions-app gjs gdm vte291 \
-                   xorg-x11-server-Xvfb mesa-dri-drivers \
+                   xorg-x11-server-Xvfb mesa-dri-drivers wl-clipboard \
                    PackageKit PackageKit-glib \
                    --nodocs --setopt install_weak_deps=False && dnf clean all -y
 

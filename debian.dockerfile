@@ -12,7 +12,7 @@ FROM ${base_image}
 RUN apt-get update -y && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         gnome-session gjs dbus-user-session gdm3 gir1.2-vte-2.91 xvfb \
-        packagekit gir1.2-packagekitglib-1.0
+        packagekit gir1.2-packagekitglib-1.0 wl-clipboard
 
 COPY common debian /
 
