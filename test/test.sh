@@ -51,4 +51,4 @@ X11_ENDPOINT="$(podman port "$CID" "$X11_CONTAINER_PORT")"
 export DISPLAY="${X11_ENDPOINT%%:*}:$(( ${X11_ENDPOINT#*:} - 6000 ))"
 
 xdpyinfo
-import -window root "$SCRIPT_DIR/screenshot.png"
+import -window root "$SCRIPT_DIR/$2.png"
