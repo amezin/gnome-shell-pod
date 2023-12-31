@@ -25,7 +25,7 @@ EXTENSION_UUID="ddterm@amezin.github.com"
 IMAGE="ghcr.io/ddterm/gnome-shell-pod/fedora-36:master"
 PACKAGE_MOUNTPATH="/home/gnomeshell/.local/share/gnome-shell/extensions/${EXTENSION_UUID}"
 
-CID=$(podman run --rm --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
+CID=$(podman run --rm --cap-add=SYS_ADMIN,SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
 ```
 
 ### 2. Wait for the system to start:
@@ -61,7 +61,7 @@ To start Wayland session, add `systemd.unit=gnome-session-wayland.target` to
 the systemd command line:
 
 ```sh
-podman run --rm --cap-add=SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}" /sbin/init systemd.unified_cgroup_hierarchy=0 systemd.unit=gnome-session-wayland.target
+podman run --rm --cap-add=SYS_ADMIN,SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}" /sbin/init systemd.unified_cgroup_hierarchy=0 systemd.unit=gnome-session-wayland.target
 ```
 
 It still runs in Xvfb, but in nested mode. Without window manager running on

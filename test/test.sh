@@ -15,7 +15,7 @@ function shutdown {
 
 set -ex
 
-CAPS="SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK"
+CAPS="SYS_ADMIN,SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK"
 CID="$(podman create -Pt --cap-add="$CAPS" "$1" /sbin/init systemd.unified_cgroup_hierarchy=0 "systemd.unit=$2.target")"
 
 trap shutdown EXIT
