@@ -1,4 +1,4 @@
-FROM registry.opensuse.org/opensuse/tumbleweed:latest@sha256:41ecccb401174cef5da351c9a0ae441a075dea6fcc7e71d24c36f93b51bc2cb0
+FROM registry.opensuse.org/opensuse/tumbleweed:latest@sha256:25a1b9a8182f6865b86a88101efe3a4737bef3f6dea5c59f8f507a8f6a234947
 
 RUN zypper --non-interactive install --no-recommends \
         xorg-x11-server-Xvfb gjs gdm gnome-session-wayland gnome-extensions gtk3-metatheme-adwaita \
