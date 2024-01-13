@@ -3,7 +3,9 @@
   "extends": [
     "config:base",
     ":maintainLockFilesWeekly",
-    "npm:unpublishSafe"
+    "npm:unpublishSafe",
+    "schedule:daily",
+    "schedule:automergeDaily"
   ],
   "docker": {
     "pinDigests": true
