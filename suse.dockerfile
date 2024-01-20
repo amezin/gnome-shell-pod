@@ -2,7 +2,7 @@ FROM registry.opensuse.org/opensuse/tumbleweed:latest@sha256:59a8d47cd3626c90658
 
 RUN zypper --non-interactive install --no-recommends \
         xorg-x11-server-Xvfb gjs gdm gnome-session-wayland gnome-extensions gtk3-metatheme-adwaita \
-        typelib-1_0-Vte-2_91 PackageKit typelib-1_0-PackageKitGlib-1_0 wl-clipboard && zypper clean --all
+        typelib-1_0-Vte-2_91 PackageKit typelib-1_0-PackageKitGlib-1_0 typelib-1_0-Handy-1_0 wl-clipboard && zypper clean --all
 
 COPY common suse /
 
