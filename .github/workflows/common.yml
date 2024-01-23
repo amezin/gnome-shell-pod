@@ -33,9 +33,6 @@ jobs:
           - image: centos-9
             dockerfile: fedora.dockerfile
 
-          - image: debian-11
-            dockerfile: debian.dockerfile
-
           - image: debian-12
             dockerfile: debian.dockerfile
 
