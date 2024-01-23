@@ -7,4 +7,4 @@ After=dbus-proxy@%i.socket
 
 [Service]
 Type=exec
-ExecStart=/lib/systemd/systemd-socket-proxyd %t/bus
+ExecStart=/usr/lib/systemd/systemd-socket-proxyd %t/bus

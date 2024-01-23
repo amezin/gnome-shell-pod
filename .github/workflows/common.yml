@@ -48,6 +48,9 @@ jobs:
           - image: opensuse-tumbleweed
             dockerfile: suse.dockerfile
 
+          - image: opensuse-leap-15.5
+            dockerfile: suse.dockerfile
+
     timeout-minutes: 10
     env:
       IMAGE: ghcr.io/${{ github.repository }}/${{ matrix.image }}
