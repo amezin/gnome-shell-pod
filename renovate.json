@@ -1,15 +1,20 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base",
+    "config:recommended",
     ":maintainLockFilesWeekly",
     "npm:unpublishSafe",
     "schedule:daily",
     "schedule:automergeDaily"
   ],
-  "docker": {
-    "pinDigests": true
-  },
+  "packageRules": [
+    {
+      "matchCategories": [
+        "docker"
+      ],
+      "pinDigests": true
+    }
+  ],
   "dockerfile": {
     "fileMatch": [
       "(^|/|\\.)dockerfile$"
