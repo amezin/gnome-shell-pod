@@ -48,11 +48,6 @@ podman exec "${CID}" systemctl is-system-running --wait
 podman exec --user gnomeshell "${CID}" set-env.sh gnome-extensions enable "${EXTENSION_UUID}"
 ```
 
-## CGroups v1/v2
-
-The default systemd command line sets `systemd.unified_cgroup_hierarchy=0`
-(CGroups v1 mode) for compatibility with older distributions on the host side.
-
 ## Wayland
 
 By default, X11 session starts.
