@@ -27,8 +27,5 @@
     },
     "groupName": "Base images"
   },
-  "lockFileMaintenance": {
-    "automerge": true
-  },
   "automerge": true
 }
