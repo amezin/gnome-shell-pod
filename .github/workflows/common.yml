@@ -58,7 +58,7 @@ jobs:
     env:
       IMAGE: ghcr.io/${{ github.repository }}/${{ matrix.image }}
       # renovate: datasource=github-tags depName=containers/crun
-      CRUN_VER: '1.11.2'
+      CRUN_VER: '1.14.4'
     steps:
       - uses: actions/checkout@v4
 
