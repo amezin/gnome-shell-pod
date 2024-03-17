@@ -1,4 +1,4 @@
-FROM archlinux:latest@sha256:73e7485d52a63bec319bae1795522dd738d12cfb45ac345b166080783bf3a5ef
+FROM archlinux:latest@sha256:85dc960fa1b01560091e6de62b09c4ad99c35cf818f6a7e2b2118a57f712bcb7
 
 RUN pacman -Syu --noconfirm dbus-daemon-units gnome-shell vte3 xorg-server-xvfb xorg-xinit mesa packagekit gdm wl-clipboard libhandy && \
     pacman -Scc --noconfirm
