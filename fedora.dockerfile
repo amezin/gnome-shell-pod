@@ -1,9 +1,9 @@
 ARG base_image=fedora-38
 
 FROM registry.fedoraproject.org/fedora:38@sha256:6349d2df6b4322c5690df1bb7743c45c356e20471dda69f27218cd9ba4a6c3c7 AS fedora-38
-FROM registry.fedoraproject.org/fedora:39@sha256:8767b267e27ee8da764c59d5b065b79f3cf8137d778496bda47047ea52174a45 AS fedora-39
-FROM registry.fedoraproject.org/fedora:40@sha256:eb7b3220173c2d2bead9681c4a89c4aa5e2f69188440d8091f4618e39176137d AS fedora-40
-FROM quay.io/centos/centos:stream9@sha256:2fa98912f5964b54df6d3cec50874bf56abc98f13077f710b8ea9dc1b41bfeb5 AS centos-9
+FROM registry.fedoraproject.org/fedora:39@sha256:d0b88207287a7ad06aa50f16f0aedb07302e56be4751229de3a6e7e63e12bab5 AS fedora-39
+FROM registry.fedoraproject.org/fedora:40@sha256:923e562a21a8244d6b37a97f983dd5c8c2be2ab12240e591fc1aea9c3d50f743 AS fedora-40
+FROM quay.io/centos/centos:stream9@sha256:c89fc32d7a368acb4c3bae3fe9180309d323bedef187ecf2952a8ff4eae4e12b AS centos-9
 
 FROM ${base_image}
 
