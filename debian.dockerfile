@@ -1,4 +1,4 @@
-ARG base_image=ubuntu-22.04
+ARG base_image=ubuntu-24.04
 
 FROM debian:12@sha256:1aadfee8d292f64b045adb830f8a58bfacc15789ae5f489a0fedcd517a862cb9 AS debian-12
 FROM ubuntu:22.04@sha256:6d7b5d3317a71adb5e175640150e44b8b9a9401a7dd394f44840626aff9fa94d AS ubuntu-22.04
