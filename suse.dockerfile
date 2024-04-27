@@ -1,7 +1,7 @@
 ARG base_image=tumbleweed
 
-FROM registry.opensuse.org/opensuse/tumbleweed:latest@sha256:efc4c883d949861fc39326e5b56b79b7677e93d005bdb37ef67ed8c129e23387 AS opensuse-tumbleweed
-FROM registry.opensuse.org/opensuse/leap@sha256:f881cf83283321060a39a87802ab0c98162cfcd2ba78b2eebd9844fdd55b9120 AS opensuse-leap-15.5
+FROM opensuse/tumbleweed:latest@sha256:15c379af6fef707cb6274be8e683bb0e184f8cae99e269be146416fa32f78793 AS opensuse-tumbleweed
+FROM opensuse/leap:15.5@sha256:165b2a35380bf408b0939c4198e5b013e9a2db5ccd173fcb82429204b8b2e61a AS opensuse-leap-15.5
 
 FROM ${base_image}
 
