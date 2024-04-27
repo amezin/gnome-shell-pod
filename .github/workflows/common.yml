@@ -57,6 +57,9 @@ jobs:
           - image: opensuse-leap-15.5
             dockerfile: suse.dockerfile
 
+          - image: opensuse-leap-15.6
+            dockerfile: suse.dockerfile
+
     timeout-minutes: 15
     env:
       IMAGE: ghcr.io/${{ github.repository }}/${{ matrix.image }}
