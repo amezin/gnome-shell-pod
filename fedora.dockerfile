@@ -1,4 +1,4 @@
-ARG base_image=fedora-38
+ARG base_image=fedora-40
 
 FROM registry.fedoraproject.org/fedora:38@sha256:6349d2df6b4322c5690df1bb7743c45c356e20471dda69f27218cd9ba4a6c3c7 AS fedora-38
 FROM registry.fedoraproject.org/fedora:39@sha256:2423c8f6171fff40d86e4d93610585b0906cd063d9488d89cbe76517540f7c33 AS fedora-39
