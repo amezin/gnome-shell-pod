@@ -6,10 +6,20 @@ FROM registry.fedoraproject.org/fedora:40@sha256:9870a116ac770429d424f6e03d44ab9
 
 FROM ${base_image}
 
-RUN dnf install -y gnome-session-xsession gnome-extensions-app gjs gdm vte291 \
-                   xorg-x11-server-Xvfb mesa-dri-drivers wl-clipboard \
-                   PackageKit PackageKit-glib libhandy \
-                   --nodocs --setopt install_weak_deps=False && dnf clean all -y
+RUN dnf install -y --nodocs --setopt install_weak_deps=False \
+        gnome-session-xsession \
+        gnome-extensions-app \
+        gjs \
+        gdm \
+        vte291 \
+        vte291-gtk4 \
+        xorg-x11-server-Xvfb \
+        mesa-dri-drivers \
+        wl-clipboard \
+        PackageKit \
+        PackageKit-glib \
+        libhandy \
+    && dnf clean all -y
 
 COPY common /
 

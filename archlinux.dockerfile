@@ -1,7 +1,18 @@
 FROM archlinux:latest@sha256:85dc960fa1b01560091e6de62b09c4ad99c35cf818f6a7e2b2118a57f712bcb7
 
-RUN pacman -Syu --noconfirm dbus-daemon-units gnome-shell vte3 xorg-server-xvfb xorg-xinit mesa packagekit gdm wl-clipboard libhandy && \
-    pacman -Scc --noconfirm
+RUN pacman -Syu --noconfirm \
+        dbus-daemon-units \
+        gnome-shell \
+        vte3 \
+        vte4 \
+        xorg-server-xvfb \
+        xorg-xinit \
+        mesa \
+        packagekit \
+        gdm \
+        wl-clipboard \
+        libhandy \
+    && pacman -Scc --noconfirm
 
 COPY common archlinux /
 
