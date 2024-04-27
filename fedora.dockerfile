@@ -20,7 +20,7 @@ RUN dnf install -y --nodocs --setopt install_weak_deps=False \
         libhandy \
     && dnf clean all -y
 
-COPY common /
+COPY common fedora /
 
 RUN systemctl set-default gnome-session-x11.target && \
     systemctl --global disable dbus-broker && \
