@@ -36,6 +36,9 @@ jobs:
           - image: debian-12
             dockerfile: debian.dockerfile
 
+          - image: debian-13
+            dockerfile: debian.dockerfile
+
           - image: ubuntu-23.10
             dockerfile: debian.dockerfile
 

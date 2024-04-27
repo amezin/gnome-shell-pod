@@ -1,6 +1,7 @@
 ARG base_image=ubuntu-24.04
 
 FROM debian:12@sha256:1aadfee8d292f64b045adb830f8a58bfacc15789ae5f489a0fedcd517a862cb9 AS debian-12
+FROM debian:trixie@sha256:5a36343dbb62f75f4fc8b9fa9404aefd2cc70379d6e512914a3cf770c8653cfc AS debian-13
 FROM ubuntu:23.10@sha256:bfae41cea51761ae450db6080b586a8c35334c756b511c06b393ae565a34cab4 AS ubuntu-23.10
 FROM ubuntu:24.04@sha256:562456a05a0dbd62a671c1854868862a4687bf979a96d48ae8e766642cd911e8 AS ubuntu-24.04
 
