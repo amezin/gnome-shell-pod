@@ -36,11 +36,14 @@ dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=org.gnome.Shell /org/gnome/
 podman exec --user gnomeshell "$CID" set-env.sh systemctl --user is-system-running --wait
 
 USER_ID="$(podman exec --user gnomeshell "$CID" id -u)"
-podman cp "$SCRIPT_DIR/gnome.shell.pod.test.service" "$CID:/run/user/$USER_ID/dbus-1/services/"
+podman cp "$SCRIPT_DIR/gnome.shell.pod.TestGtk3.service" "$CID:/run/user/$USER_ID/dbus-1/services/"
+podman cp "$SCRIPT_DIR/gnome.shell.pod.TestGtk4.service" "$CID:/run/user/$USER_ID/dbus-1/services/"
 podman cp "$SCRIPT_DIR/gtk3-app.js" "$CID:/usr/local/bin/"
+podman cp "$SCRIPT_DIR/gtk4-app.js" "$CID:/usr/local/bin/"
 
 dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus.ReloadConfig
-dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=gnome.shell.pod.test /gnome/shell/pod/test gnome.shell.pod.test.Test.TestMethod
+dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=gnome.shell.pod.TestGtk3 /gnome/shell/pod/test gnome.shell.pod.TestGtk3.TestMethod
+dbus-send --bus="$DBUS_ADDRESS" --print-reply --dest=gnome.shell.pod.TestGtk4 /gnome/shell/pod/test gnome.shell.pod.TestGtk4.TestMethod
 
 sleep 15
 

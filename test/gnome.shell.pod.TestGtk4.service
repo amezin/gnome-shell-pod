@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=gnome.shell.pod.TestGtk4
+Exec=/usr/bin/gjs /usr/local/bin/gtk4-app.js --gapplication-service

@@ -2,8 +2,8 @@
 
 'use strict';
 
-imports.gi.versions.Gdk = '3.0';
-imports.gi.versions.Gtk = '3.0';
+imports.gi.versions.Gdk = '4.0';
+imports.gi.versions.Gtk = '4.0';
 
 const System = imports.system;
 const { Gio, Gtk } = imports.gi;
@@ -19,7 +19,7 @@ const interface_xml = `
     "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
 
 <node>
-    <interface name="gnome.shell.pod.TestGtk3">
+    <interface name="gnome.shell.pod.TestGtk4">
         <method name="TestMethod">
             <arg type="s" direction="out"/>
         </method>
@@ -30,7 +30,7 @@ const interface_xml = `
 const dbus_api = Gio.DBusExportedObject.wrapJSObject(interface_xml, new DBusApi());
 dbus_api.export(Gio.DBus.session, '/gnome/shell/pod/test');
 
-const app = new Gtk.Application({ application_id: 'gnome.shell.pod.TestGtk3' });
+const app = new Gtk.Application({ application_id: 'gnome.shell.pod.TestGtk4' });
 
 app.connect('startup', Function());
 app.connect('activate', Function());
