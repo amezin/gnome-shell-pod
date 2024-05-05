@@ -1,7 +1,7 @@
 ARG base_image=fedora-40
 
-FROM fedora:39@sha256:ee042eb5527cfe117d279af0fff4461ad0c5441a8ef36deea9d98a2eb0130a90 AS fedora-39
-FROM fedora:40@sha256:5ce8497aeea599bf6b54ab3979133923d82aaa4f6ca5ced1812611b197c79eb0 AS fedora-40
+FROM docker.io/library/fedora:39@sha256:ee042eb5527cfe117d279af0fff4461ad0c5441a8ef36deea9d98a2eb0130a90 AS fedora-39
+FROM docker.io/library/fedora:40@sha256:5ce8497aeea599bf6b54ab3979133923d82aaa4f6ca5ced1812611b197c79eb0 AS fedora-40
 
 FROM ${base_image}
 
