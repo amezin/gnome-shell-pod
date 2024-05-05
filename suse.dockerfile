@@ -1,6 +1,6 @@
 ARG base_image=opensuse-tumbleweed
 
-FROM opensuse/tumbleweed:latest@sha256:f5d2ff6963ab46e6ad959443e494b4c01eee7a42c3b751622b34be47ead65a07 AS opensuse-tumbleweed
+FROM opensuse/tumbleweed:latest@sha256:61254a9cd3ce5f273902a50c596ae3a0e7dd0371f98be1fe9f6c917dcf48d264 AS opensuse-tumbleweed
 FROM opensuse/leap:15.6@sha256:bbcfadb621ea118a99a55ec07ce8586425fc370ac071b5f492bdcb44243c09bb AS opensuse-leap-15.6
 
 FROM ${base_image}
