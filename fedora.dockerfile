@@ -1,7 +1,7 @@
 ARG base_image=fedora-40
 
-FROM registry.fedoraproject.org/fedora:39@sha256:87185cf68011ccc11cff1693291f87ef214c6d4d55b84364a256746c4bbb5435 AS fedora-39
-FROM registry.fedoraproject.org/fedora:40@sha256:e76a510e21108e3678e4a7e93a387da2bda6ec5fcd8df15371b8a71ec30b5f2a AS fedora-40
+FROM fedora:39@sha256:ee042eb5527cfe117d279af0fff4461ad0c5441a8ef36deea9d98a2eb0130a90 AS fedora-39
+FROM fedora:40@sha256:5ce8497aeea599bf6b54ab3979133923d82aaa4f6ca5ced1812611b197c79eb0 AS fedora-40
 
 FROM ${base_image}
 
