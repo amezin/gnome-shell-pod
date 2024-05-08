@@ -13,6 +13,14 @@
         "docker"
       ],
       "pinDigests": true
+    },
+    {
+      "matchPackagePatterns": [
+        "opensuse/tumbleweed$"
+      ],
+      "extends": [
+        "schedule:automergeWeekly"
+      ]
     }
   ],
   "dockerfile": {
