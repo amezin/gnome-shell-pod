@@ -25,7 +25,7 @@ EXTENSION_UUID="ddterm@amezin.github.com"
 IMAGE="ghcr.io/ddterm/gnome-shell-pod/fedora-39:master"
 PACKAGE_MOUNTPATH="/home/gnomeshell/.local/share/gnome-shell/extensions/${EXTENSION_UUID}"
 
-CID=$(podman run --rm --cap-add=SYS_ADMIN,SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,DAC_READ_SEARCH,IPC_LOCK --security-opt=label=disable -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
+CID=$(podman run --rm --cap-add=SYS_ADMIN,SYS_NICE,SYS_PTRACE,SETPCAP,NET_RAW,NET_BIND_SERVICE,IPC_LOCK --security-opt=label=disable -v "${SOURCE_DIR}:${PACKAGE_MOUNTPATH}:ro" -td "${IMAGE}")
 ```
 
 ### 2. Wait for the system to start:
