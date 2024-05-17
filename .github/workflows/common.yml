@@ -19,7 +19,7 @@ on:
 
 jobs:
   build-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -54,8 +54,7 @@ jobs:
     timeout-minutes: 15
     env:
       IMAGE: ghcr.io/${{ github.repository }}/${{ matrix.image }}
-      # renovate: datasource=github-tags depName=containers/crun
-      CRUN_VER: '1.15'
+
     steps:
       - uses: actions/checkout@v4
 
@@ -87,23 +86,9 @@ jobs:
             ${{ env.IMAGE }}:master
           cache-to: type=inline
 
-      - run: |
-          # https://noobient.com/2023/11/15/fixing-ubuntu-containers-failing-to-start-with-systemd/
-          mkdir -p "${HOME}/.local/bin"
-          curl -L "https://github.com/containers/crun/releases/download/${CRUN_VER}/crun-${CRUN_VER}-linux-amd64" -o "${HOME}/.local/bin/crun"
-          chmod +x "${HOME}/.local/bin/crun"
-          mkdir -p "${HOME}/.config/containers"
-          cat << EOF > "${HOME}/.config/containers/containers.conf"
-          [engine.runtimes]
-          crun = [
-            "${HOME}/.local/bin/crun",
-            "/usr/bin/crun"
-          ]
-          EOF
-
       - run: podman pull docker-daemon:${{ steps.docker_build.outputs.imageid }} | tee .podman-image-id
 
-      - run: DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends x11-utils
+      - run: DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends x11-utils imagemagick
 
       - id: gnome-session-x11
         name: Test gnome-session-x11
