@@ -3,8 +3,7 @@
   "extends": [
     "config:recommended",
     ":maintainLockFilesWeekly",
-    "npm:unpublishSafe",
-    "schedule:automergeDaily"
+    "npm:unpublishSafe"
   ],
   "packageRules": [
     {
@@ -19,6 +18,14 @@
       ],
       "extends": [
         "schedule:automergeWeekly"
+      ]
+    },
+    {
+      "excludePackagePatterns": [
+        "opensuse/tumbleweed$"
+      ],
+      "extends": [
+        "schedule:automergeDaily"
       ]
     }
   ],
