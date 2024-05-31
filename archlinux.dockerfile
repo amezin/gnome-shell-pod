@@ -1,4 +1,4 @@
-FROM docker.io/library/archlinux:latest@sha256:85dc960fa1b01560091e6de62b09c4ad99c35cf818f6a7e2b2118a57f712bcb7
+FROM docker.io/library/archlinux:latest@sha256:2fe50139e8eff5be59fffa698e09003df948e655a3fd4e841b15e858e4982ecf
 
 RUN pacman -Syu --noconfirm \
         dbus-daemon-units \
