@@ -1,6 +1,6 @@
 ARG base_image=opensuse-tumbleweed
 
-FROM docker.io/opensuse/tumbleweed:latest@sha256:cef34da5c8f8c68d551054f1e1d3d5c5d3adf01684e925db6cccd448342954f9 AS opensuse-tumbleweed
+FROM docker.io/opensuse/tumbleweed:latest@sha256:29b2f3ec72ab43cb7602e8eb06acd13ef79e766529e05614ff2534d8fdf6e623 AS opensuse-tumbleweed
 FROM docker.io/opensuse/leap:15.6@sha256:b92aba5f8413624d1a4b671dff4858e454fcbe5e38dff1880cc48241750c2e8e AS opensuse-leap-15.6
 
 FROM ${base_image}
